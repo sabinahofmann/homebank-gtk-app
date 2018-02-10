@@ -1,11 +1,10 @@
 module Homebank
   class Application < Gtk::Application
     def initialize
-      super 'de.hofmann.gtk-todo', Gio::ApplicationFlags::FLAGS_NONE
+      super 'de.hofmann.homebank-gtk', Gio::ApplicationFlags::FLAGS_NONE
 
       signal_connect :activate do |application|
-        window = Gtk::ApplicationWindow.new(application)
-        window.set_title 'CVS Convertor'
+        window = Homebank::ApplicationWindow.new(application)
         window.present
       end
     end
