@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="de/hofmann/homebank-gtk">
+    <file preprocess="xml-stripblanks">ui/application_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/new_account_property_window.ui</file>
+  </gresource>
+</gresources>
