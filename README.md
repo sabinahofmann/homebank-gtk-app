@@ -1,2 +1,4 @@
-# homebank-gtk-app
-simple cvs converter for the homebank application
+CVS Convertor for Homebank
+==========================
+
+simple cvs convertor for the homebank application
