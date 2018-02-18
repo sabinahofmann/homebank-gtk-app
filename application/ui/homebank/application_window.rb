@@ -17,10 +17,11 @@ module Homebank
 
       set_title 'CVS Creator Simple'
 
-      add_new_account_button.signal_connect 'clicked' do |button, application|
-        new_account_property_window = Homebank::NewAccountPropertyWindow.new(application)
+      add_new_account_button.signal_connect 'clicked' do |button|
+        new_account_property_window = Homebank::NewAccountPropertyWindow.new(application, Homebank::Account.new(user_data_path: application.user_data_path))
         new_account_property_window.present
       end
     end
   end
 end
+
