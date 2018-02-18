@@ -59,6 +59,7 @@
             <property name="margin_right">20</property>
             <property name="margin_top">20</property>
             <property name="margin_bottom">20</property>
+            <property name="vexpand">True</property>
             <property name="row_spacing">10</property>
             <property name="column_spacing">10</property>
             <child>
@@ -107,7 +108,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Date position:</property>
+                <property name="label" translatable="yes">Date:</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -121,7 +122,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Payment position:</property>
+                <property name="label" translatable="yes">Payment:</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -135,7 +136,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Info position:</property>
+                <property name="label" translatable="yes">Info:</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -145,11 +146,11 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="payee_position_label:">
+              <object class="GtkLabel" id="payee_position_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Payee position:</property>
+                <property name="label" translatable="yes">Payee:</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -163,7 +164,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Memo position:</property>
+                <property name="label" translatable="yes">Memo:</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -177,7 +178,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Amount position:</property>
+                <property name="label" translatable="yes">Amount:</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -191,7 +192,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Category position:</property>
+                <property name="label" translatable="yes">Category:</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -205,7 +206,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Tags position:</property>
+                <property name="label" translatable="yes">Tags:</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -342,7 +343,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkTextView" id="notes_entry">
+              <object class="GtkTextView" id="notes_text_view">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="hexpand">True</property>
