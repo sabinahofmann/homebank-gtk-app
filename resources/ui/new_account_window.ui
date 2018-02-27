@@ -104,7 +104,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="date_position_label">
+              <object class="GtkLabel" id="date_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -118,7 +118,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="payment_position_label">
+              <object class="GtkLabel" id="payment_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -132,7 +132,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="info_position_label">
+              <object class="GtkLabel" id="info_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -146,7 +146,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="payee_position_label">
+              <object class="GtkLabel" id="payee_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -160,7 +160,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="memo_position_label">
+              <object class="GtkLabel" id="memo_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -174,7 +174,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="amount_position_label">
+              <object class="GtkLabel" id="amount_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -188,7 +188,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="category_position_label">
+              <object class="GtkLabel" id="category_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
@@ -202,7 +202,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="tags_position_label">
+              <object class="GtkLabel" id="tags_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
