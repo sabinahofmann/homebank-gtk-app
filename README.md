@@ -1,4 +1,4 @@
-CVS Convertor for Homebank
-==========================
-
-simple cvs convertor for the homebank application
+CVS convertor
+=============
+converts any cvs file from the export of a account, so that it is valid for import in the 
+homebank application

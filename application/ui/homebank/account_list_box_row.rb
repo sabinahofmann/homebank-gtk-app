@@ -10,7 +10,7 @@ module Homebank
         bind_template_child 'account_title_label'
         bind_template_child 'account_details_revealer'
         bind_template_child 'account_notes_text_view'
-        bind_template_child 'delete_button'
+        bind_template_child 'select_button'
         bind_template_child 'edit_button'
       end
     end
@@ -25,12 +25,9 @@ module Homebank
         account_details_revealer.set_reveal_child !account_details_revealer.reveal_child?
       end
 
-      delete_button.signal_connect 'clicked' do
-        item.delete!
-
-        #Locate the application window
-        application_window = application.windows.find { |w| w.is_a? Homebank::ApplicationWindow }
-        application_window.load_account
+      select_button.signal_connect 'clicked' do
+        cvs_convert_window = Homebank::CvsConvertWindow.new(application, item)
+        cvs_convert_window.present
       end
 
       edit_button.signal_connect 'clicked' do
