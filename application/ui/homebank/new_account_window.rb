@@ -23,6 +23,7 @@ module Homebank
         bind_template_child 'notes_text_view'
         bind_template_child 'cancel_button'
         bind_template_child 'save_button'
+        bind_template_child 'delete_button'
       end
     end
 
@@ -46,6 +47,15 @@ module Homebank
       # cancel
       cancel_button.signal_connect 'clicked' do |button|
         close
+      end
+
+      # delete
+      delete_button.signal_connect 'clicked' do
+        item.delete!
+
+        #Locate the application window
+        application_window = application.windows.find { |w| w.is_a? Homebank::ApplicationWindow }
+        application_window.load_account
       end
 
       # save
