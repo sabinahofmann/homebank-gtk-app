@@ -26,7 +26,7 @@ module Homebank
       end
 
       select_button.signal_connect 'clicked' do
-        cvs_convert_window = Homebank::CvsConvertWindow.new(application, item)
+        cvs_convert_window = Homebank::CsvConvertWindow.new(application, item)
         cvs_convert_window.present
       end
 

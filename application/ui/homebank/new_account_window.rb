@@ -19,7 +19,6 @@ module Homebank
         bind_template_child 'memo_entry'
         bind_template_child 'amount_entry'
         bind_template_child 'category_entry'
-        bind_template_child 'tags_entry'
         bind_template_child 'notes_text_view'
         bind_template_child 'cancel_button'
         bind_template_child 'save_button'
@@ -41,7 +40,6 @@ module Homebank
       memo_entry.text = item.memo if item.memo
       amount_entry.text = item.amount if item.amount
       category_entry.text = item.category if item.category
-      tags_entry.text = item.tags if item.tags
       notes_text_view.buffer.text = item.notes if item.notes
 
       # cancel
@@ -69,7 +67,6 @@ module Homebank
         item.memo = memo_entry.text
         item.amount = amount_entry.text
         item.category = category_entry.text
-        item.tags = tags_entry.text
         item.notes = notes_text_view.buffer.text
         item.save!
         close
