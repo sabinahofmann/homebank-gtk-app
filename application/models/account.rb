@@ -4,7 +4,7 @@ require 'json'
 module Homebank
   class Account
     PROPERTIES = [:id, :bank_name, :notes, :start_line, :filename, :creation_datetime,
-                  :date, :payment, :info, :payee, :memo, :amount, :category, :tags].freeze
+                  :date, :payment, :info, :payee, :memo, :amount, :category].freeze
 
     attr_accessor *PROPERTIES
 

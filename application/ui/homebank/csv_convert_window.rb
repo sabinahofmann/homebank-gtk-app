@@ -1,10 +1,12 @@
+require 'csv'
+
 module Homebank
-  class CvsConvertWindow < Gtk::Dialog
+  class CsvConvertWindow < Gtk::Dialog
     type_register
 
     class << self
       def init
-        set_template resource: '/de/hofmann/homebank-gtk/ui/cvs_convert_window.ui'
+        set_template resource: '/de/hofmann/homebank-gtk/ui/csv_convert_window.ui'
 
         bind_template_child 'file_chooser_button'
         bind_template_child 'convert_button'
@@ -12,27 +14,26 @@ module Homebank
       end
     end
 
-    def initialize(application, item)
+    def initialize(application, account)
       super application: application
 
-      file_chooser_button = Gtk::FileChooserButton.new(
-        "Select a file", Gtk::FileChooserAction::SELECT_FOLDER)
       file_chooser_button.current_folder = GLib.home_dir
-
-      # filter only cvs
-      filter = Gtk::FileFilter.new
-      filter.name = "CVS Files"
-      filter.add_pattern('*.cvs')
-      file_chooser_button.add_filter(filter)
 
       # select file
       file_chooser_button.signal_connect 'selection_changed'  do |w|
-        file_changed(choo_file_btt, label)
+        puts "change file"
+        file_changed(file_chooser_button)
       end
+
+      # filter only cvs
+      filter = Gtk::FileFilter.new
+      filter.name = "CSV Files"
+      filter.add_pattern('*.csv')
+      file_chooser_button.add_filter(filter)
 
       # convert cvs
       convert_button.signal_connect 'clicked' do
-        puts "convert button #1 clicked"
+        Homebank::CsvConvertor.new(account, file_chooser_button).generate
       end
 
       # cancel
@@ -48,10 +49,9 @@ module Homebank
     end
 
     # file method
-    def file_changed(choo_file, label)
+    def file_changed(choo_file)
       file = choo_file.filename
       file = "" if file == nil
-      label.text = file
     end
   end
 end

@@ -17,7 +17,7 @@ module Homebank
     def initialize(application)
       super application: application
 
-      set_title 'CVS Convertor'
+      set_title 'CSV Convertor'
 
       # cancel
       cancel_button.signal_connect 'clicked' do |button|
