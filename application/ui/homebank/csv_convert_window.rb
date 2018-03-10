@@ -33,7 +33,12 @@ module Homebank
 
       # convert cvs
       convert_button.signal_connect 'clicked' do
-        Homebank::CsvConvertor.new(account, file_chooser_button).generate
+        options = { 
+          user_data_path: application.user_data_path, 
+          account: account, 
+          file: file_chooser_button 
+        }
+        Homebank::CsvConvertor.new(options).generate
       end
 
       # cancel
