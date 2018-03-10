@@ -3,8 +3,9 @@ require 'json'
 
 module Homebank
   class Account
-    PROPERTIES = [:id, :bank_name, :notes, :start_line, :filename, :creation_datetime,
-                  :date, :payment, :info, :payee, :memo, :amount, :category].freeze
+
+    PROPERTIES = %i(id bank_name notes start_line filename creation_datetime date payment
+     info payee memo amount category).freeze
 
     attr_accessor *PROPERTIES
 
@@ -34,11 +35,6 @@ module Homebank
       raise ArgumentError, "Failed to load existing item: #{e.message}"
     end
 
-    # Resolves if an item is new
-    def is_new?
-      !File.exists? @filename
-    end
-
     # Saves an item to its `filename` location
     def save!
       File.open(@filename, 'w') do |file|
@@ -48,7 +44,7 @@ module Homebank
 
     # Deletes an item
     def delete!
-      raise 'Item is not saved!' if is_new?
+      raise 'Item is not saved!' if !File.exists? @filename
 
       File.delete(@filename)
     end

@@ -28,6 +28,7 @@ module Homebank
 
     def initialize(application, item)
       super application: application
+
       set_title "Account #{item.is_new? ? 'Create' : 'Edit' } Mode"
 
       id_value_label.text = item.id
