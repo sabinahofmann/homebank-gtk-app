@@ -33,12 +33,13 @@ module Homebank
 
       # convert cvs
       convert_button.signal_connect 'clicked' do
-        options = { 
-          user_data_path: application.user_data_path, 
-          account: account, 
-          file: file_chooser_button 
+        options = {
+          user_data_path: application.user_data_path,
+          account: account,
+          file: file_chooser_button
         }
-        Homebank::CsvConvertor.new(options).generate
+        result = Homebank::CsvConvertor.new(options).generate
+        result == true ? on_info : on_erro
       end
 
       # cancel
@@ -57,6 +58,22 @@ module Homebank
     def file_changed(choo_file)
       file = choo_file.filename
       file = "" if file == nil
+    end
+
+    def on_info
+      md = Gtk::MessageDialog.new :parent => self, 
+          :flags => :destroy_with_parent, :type => :info, 
+          :buttons_type => :close, :message => "Converting completed"
+      md.run
+      md.destroy
+    end
+
+    def on_erro
+      md = Gtk::MessageDialog.new :parent => self, 
+          :flags => :modal, :type => :error, 
+          :buttons_type => :close, :message => "Error converting file"
+      md.run
+      md.destroy
     end
   end
 end
