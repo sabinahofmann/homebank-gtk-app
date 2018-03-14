@@ -42,9 +42,13 @@ module Homebank
       end
     end
 
+    def is_new?
+      !File.exists? @filename
+    end
+
     # Deletes an item
     def delete!
-      raise 'Item is not saved!' if !File.exists? @filename
+      raise 'Item is not saved!' if is_new?
 
       File.delete(@filename)
     end
