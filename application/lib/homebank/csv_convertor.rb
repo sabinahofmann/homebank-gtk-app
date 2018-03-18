@@ -14,11 +14,7 @@ module Homebank
 
     def generate
       touch_csv
-      if File.mtime(@homebank_csv) > @timestamp
-        true
-      else
-        false
-      end
+      File.mtime(@homebank_csv) > @timestamp ? true : false
     end
 
     private
@@ -44,23 +40,24 @@ module Homebank
       options = { col_sep: ';', encoding: 'iso-8859-1:utf-8', force_quotes: false }
       if @csv_file
         CSV.foreach(@csv_file, options).with_index do |row, i|
+          if i >= @account.start_line && row.any?
+            payment = row[@account.payment]
+            info = row[@account.info]
+            payee = row[@account.payee] || ""
+            memo = row[@account.memo] || ""
+            amount = row[@account.amount]
+            category = row[@account.category]
 
-          line_start = @account.start_line.to_i >= 0 ? 7 : @account.start_line.to_i
-          if i >= line_start && row.any?
-
-            date = row[@account.date.to_i].gsub(".", "-")
-            payment = row[@account.payment.to_i] || 0
-            info = row[@account.info.to_i] || ''
-            payee = row[@account.payee.to_i].gsub("\"", "")
-            memo = row[@account.memo.to_i].gsub("\"", "")
-            amount = row[@account.amount.to_i]
-            category = row[@account.category.to_i]
-
-            data << [date,  payment, info, payee, memo, amount, category]
+            data << [date(row),  payment, info, payee.gsub("\"", ""), memo.gsub("\"", ""), amount, category]
           end
         end
       end
       return data
+    end
+
+    def date(row)
+      date = row[@account.date] || Time.now.strftime("%d-%m-%Y")
+      date.gsub(".", "-")
     end
   end
 end

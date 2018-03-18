@@ -33,14 +33,14 @@ module Homebank
 
       id_value_label.text = item.id
       bank_name_entry.text = item.bank_name if item.bank_name
-      start_line_entry.text = item.start_line if item.start_line
-      date_entry.text = item.date if item.date
-      payment_entry.text = item.payment if item.payment
-      info_entry.text = item.info if item.info
-      payee_entry.text = item.payee if item.payee
-      memo_entry.text = item.memo if item.memo
-      amount_entry.text = item.amount if item.amount
-      category_entry.text = item.category if item.category
+      start_line_entry.value = item.start_line if item.start_line
+      date_entry.value = item.date if item.date
+      payment_entry.value = item.payment if item.payment
+      info_entry.value = item.info if item.info
+      payee_entry.value = item.payee if item.payee
+      memo_entry.value = item.memo if item.memo
+      amount_entry.value = item.amount if item.amount
+      category_entry.value = item.category if item.category
       notes_text_view.buffer.text = item.notes if item.notes
 
       # cancel
@@ -60,14 +60,14 @@ module Homebank
       # save
       save_button.signal_connect 'clicked' do |button|
         item.bank_name = bank_name_entry.text
-        item.start_line = start_line_entry.text
-        item.date = date_entry.text
-        item.payment = payment_entry.text
-        item.info = info_entry.text
-        item.payee = payee_entry.text
-        item.memo = memo_entry.text
-        item.amount = amount_entry.text
-        item.category = category_entry.text
+        item.start_line = start_line_entry.value
+        item.date = date_entry.value
+        item.payment = payment_entry.value
+        item.info = info_entry.value
+        item.payee = payee_entry.value
+        item.memo = memo_entry.value
+        item.amount = amount_entry.value
+        item.category = category_entry.value
         item.notes = notes_text_view.buffer.text
         item.save!
         close
