@@ -6,10 +6,10 @@ module Homebank
     attr_reader :homebank_csv, :csv_file, :account, :timestamp
 
     def initialize(options={})
-      @account = options[:account]
-      @homebank_csv = "#{options[:user_data_path]}/homebank-import-#{@account.bank_name}.csv"
-      @timestamp = File.exists?(@homebank_csv) ? File.mtime(@homebank_csv) : Time.now
       @csv_file = options[:file].filename
+      @account = options[:account]
+      @homebank_csv = homebank_filename
+      @timestamp = File.exists?(@homebank_csv) ? File.mtime(@homebank_csv) : Time.now
     end
 
     def generate
@@ -24,7 +24,7 @@ module Homebank
       if csv_data.any?
         File.delete(@homebank_csv) if File.exists?(@homebank_csv)
 
-        CSV.open(@homebank_csv, "wb", { :col_sep => ";" }) do |csv|
+        CSV.open(@homebank_csv, "wb", { col_sep: ";" }) do |csv|
           csv_data.each do |line|
             csv << line
           end
@@ -41,23 +41,26 @@ module Homebank
       if @csv_file
         CSV.foreach(@csv_file, options).with_index do |row, i|
           if i >= @account.start_line && row.any?
-            payment = row[@account.payment]
-            info = row[@account.info]
+            tag = row[@account.tag]
             payee = row[@account.payee] || ""
             memo = row[@account.memo] || ""
             amount = row[@account.amount]
             category = row[@account.category]
 
-            data << [date(row),  payment, info, payee.gsub("\"", ""), memo.gsub("\"", ""), amount, category]
+            data << [date(row), @account.payment, '', payee.gsub("\"", ""), memo.gsub("\"", ""), amount, category, tag.gsub("\"", "")]
           end
         end
       end
-      return data
+      data
     end
 
     def date(row)
       date = row[@account.date] || Time.now.strftime("%d-%m-%Y")
       date.gsub(".", "-")
+    end
+
+    def homebank_filename
+      "#{File.dirname(@csv_file)}/#{@account.bank_name}-homebank-import.csv"
     end
   end
 end

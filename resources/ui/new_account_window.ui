@@ -17,11 +17,6 @@
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
-  <object class="GtkAdjustment" id="info_int">
-    <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">1</property>
-  </object>
   <object class="GtkAdjustment" id="memo_int">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
@@ -39,6 +34,11 @@
   </object>
   <object class="GtkAdjustment" id="start_line_int">
     <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="tag_int">
+    <property name="upper">7</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
@@ -187,11 +187,11 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="info_label">
+              <object class="GtkLabel" id="tag_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Info:</property>
+                <property name="label" translatable="yes">Tag:</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -390,21 +390,20 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSpinButton" id="info_entry">
+              <object class="GtkSpinButton" id="tag_entry">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="max_length">100</property>
+                <property name="max_length">7</property>
                 <property name="width_chars">0</property>
                 <property name="max_width_chars">0</property>
                 <property name="xalign">1</property>
                 <property name="progress_pulse_step">1</property>
                 <property name="input_purpose">number</property>
-                <property name="adjustment">info_int</property>
+                <property name="adjustment">tag_int</property>
                 <property name="climb_rate">1</property>
                 <property name="numeric">True</property>
                 <property name="wrap">True</property>
                 <property name="update_policy">if-valid</property>
-                <property name="value">1</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>

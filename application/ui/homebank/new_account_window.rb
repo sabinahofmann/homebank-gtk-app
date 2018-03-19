@@ -14,7 +14,7 @@ module Homebank
         bind_template_child 'start_line_entry'
         bind_template_child 'date_entry'
         bind_template_child 'payment_entry'
-        bind_template_child 'info_entry'
+        bind_template_child 'tag_entry'
         bind_template_child 'payee_entry'
         bind_template_child 'memo_entry'
         bind_template_child 'amount_entry'
@@ -36,7 +36,7 @@ module Homebank
       start_line_entry.value = item.start_line if item.start_line
       date_entry.value = item.date if item.date
       payment_entry.value = item.payment if item.payment
-      info_entry.value = item.info if item.info
+      tag_entry.value = item.tag if item.tag
       payee_entry.value = item.payee if item.payee
       memo_entry.value = item.memo if item.memo
       amount_entry.value = item.amount if item.amount
@@ -63,7 +63,7 @@ module Homebank
         item.start_line = start_line_entry.value
         item.date = date_entry.value
         item.payment = payment_entry.value
-        item.info = info_entry.value
+        item.tag = tag_entry.value
         item.payee = payee_entry.value
         item.memo = memo_entry.value
         item.amount = amount_entry.value

@@ -5,7 +5,7 @@ module Homebank
   class Account
 
     PROPERTIES = %i(id bank_name notes start_line filename creation_datetime date payment
-     info payee memo amount category).freeze
+     tag payee memo amount category).freeze
 
     attr_accessor *PROPERTIES
 
