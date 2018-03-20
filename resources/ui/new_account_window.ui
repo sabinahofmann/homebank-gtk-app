@@ -28,7 +28,7 @@
     <property name="page_increment">1</property>
   </object>
   <object class="GtkAdjustment" id="payment_int">
-    <property name="upper">100</property>
+    <property name="upper">10</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
@@ -135,7 +135,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Bank Name:</property>
+                <property name="label" translatable="yes">Bank name:</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -148,6 +148,7 @@
               <object class="GtkLabel" id="start_line_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_markup" translatable="yes">Raw position in csv file with first transaction entry</property>
                 <property name="hexpand">True</property>
                 <property name="label" translatable="yes">Start line at:</property>
                 <property name="xalign">1</property>
@@ -162,6 +163,7 @@
               <object class="GtkLabel" id="date_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_markup" translatable="yes">Column posistion</property>
                 <property name="hexpand">True</property>
                 <property name="label" translatable="yes">Date:</property>
                 <property name="xalign">1</property>
@@ -176,6 +178,7 @@
               <object class="GtkLabel" id="payment_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_markup" translatable="yes">Possible values are from 0=none to 10=FI fee. You cannot import transaction with payment type=5 (internal xfer)!</property>
                 <property name="hexpand">True</property>
                 <property name="label" translatable="yes">Payment:</property>
                 <property name="xalign">1</property>
@@ -414,7 +417,7 @@
               <object class="GtkSpinButton" id="payment_entry">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="max_length">100</property>
+                <property name="max_length">10</property>
                 <property name="width_chars">0</property>
                 <property name="max_width_chars">0</property>
                 <property name="xalign">1</property>
@@ -425,7 +428,6 @@
                 <property name="numeric">True</property>
                 <property name="wrap">True</property>
                 <property name="update_policy">if-valid</property>
-                <property name="value">1</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
