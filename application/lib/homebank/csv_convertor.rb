@@ -46,8 +46,9 @@ module Homebank
             memo = row[@account.memo] || ""
             amount = row[@account.amount]
             category = row[@account.category]
+            payment = @account.payment # from 0=none to 10=FI fee, import transaction with payment type=5 (internal xfer)
 
-            data << [date(row), @account.payment, '', payee.gsub("\"", ""), memo.gsub("\"", ""), amount, category, tag.gsub("\"", "")]
+            data << [date(row), payment, '', payee.gsub("\"", ""), memo.gsub("\"", ""), amount, category, tag.gsub("\"", "")]
           end
         end
       end
