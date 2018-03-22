@@ -3,27 +3,37 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkAdjustment" id="amount_int">
+    <property name="lower">1</property>
     <property name="upper">100</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
   <object class="GtkAdjustment" id="category_int">
+    <property name="lower">1</property>
     <property name="upper">100</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
   <object class="GtkAdjustment" id="date_int">
+    <property name="lower">1</property>
     <property name="upper">100</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
   <object class="GtkAdjustment" id="memo_int">
+    <property name="lower">1</property>
     <property name="upper">100</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
   <object class="GtkAdjustment" id="payee_int">
+    <property name="lower">1</property>
     <property name="upper">100</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
@@ -33,12 +43,16 @@
     <property name="page_increment">1</property>
   </object>
   <object class="GtkAdjustment" id="start_line_int">
+    <property name="lower">1</property>
     <property name="upper">100</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
   <object class="GtkAdjustment" id="tag_int">
-    <property name="upper">7</property>
+    <property name="lower">1</property>
+    <property name="upper">100</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
@@ -163,7 +177,7 @@
               <object class="GtkLabel" id="date_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="tooltip_markup" translatable="yes">Column posistion</property>
+                <property name="tooltip_markup" translatable="yes">Column position</property>
                 <property name="hexpand">True</property>
                 <property name="label" translatable="yes">Date:</property>
                 <property name="xalign">1</property>
@@ -193,6 +207,7 @@
               <object class="GtkLabel" id="tag_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_markup" translatable="yes">Column position</property>
                 <property name="hexpand">True</property>
                 <property name="label" translatable="yes">Tag:</property>
                 <property name="xalign">1</property>
@@ -207,6 +222,7 @@
               <object class="GtkLabel" id="payee_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_markup" translatable="yes">Column position</property>
                 <property name="hexpand">True</property>
                 <property name="label" translatable="yes">Payee:</property>
                 <property name="xalign">1</property>
@@ -221,6 +237,7 @@
               <object class="GtkLabel" id="memo_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_markup" translatable="yes">Column position</property>
                 <property name="hexpand">True</property>
                 <property name="label" translatable="yes">Memo:</property>
                 <property name="xalign">1</property>
@@ -235,6 +252,7 @@
               <object class="GtkLabel" id="amount_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_markup" translatable="yes">Column position</property>
                 <property name="hexpand">True</property>
                 <property name="label" translatable="yes">Amount:</property>
                 <property name="xalign">1</property>
@@ -249,6 +267,7 @@
               <object class="GtkLabel" id="category_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_markup" translatable="yes">Column position</property>
                 <property name="hexpand">True</property>
                 <property name="label" translatable="yes">Category:</property>
                 <property name="xalign">1</property>
