@@ -30,7 +30,7 @@ module Homebank
 
     def application
       parent = self.parent
-      parent = parent.parent while !parent.is_a? Gtk::Dialog
+      parent = parent.parent while !parent.is_a? Gtk::Window
       parent.application
     end
   end
