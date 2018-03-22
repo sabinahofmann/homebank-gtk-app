@@ -1,49 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.2 -->
+<!-- Generated with glade 3.20.4 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <template class="HomebankApplicationWindow" parent="GtkDialog">
+  <template class="HomebankApplicationWindow" parent="GtkWindow">
     <property name="can_focus">False</property>
-    <property name="type_hint">dialog</property>
-    <child internal-child="vbox">
+    <child>
       <object class="GtkBox" id="main_box">
+        <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="main_button_box">
+        <child>
+          <object class="GtkToolbar" id="main_tool_bar">
+            <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
+            <property name="toolbar_style">both-horiz</property>
             <child>
-              <object class="GtkButton" id="add_new_account_button">
-                <property name="label" translatable="yes">Add New Account</property>
+              <object class="GtkToolButton" id="add_new_account_button">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
+                <property name="can_focus">False</property>
+                <property name="tooltip_text" translatable="yes">Add account</property>
+                <property name="halign">baseline</property>
+                <property name="valign">baseline</property>
+                <property name="border_width">3</property>
+                <property name="is_important">True</property>
+                <property name="label" translatable="yes">Add account</property>
+                <property name="stock_id">gtk-add</property>
               </object>
               <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="cancel_button">
-                <property name="label" translatable="yes">Cancel</property>
+              <object class="GtkToolButton" id="help_button">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">baseline</property>
+                <property name="valign">baseline</property>
+                <property name="border_width">3</property>
+                <property name="is_important">True</property>
+                <property name="label" translatable="yes">Help</property>
+                <property name="stock_id">gtk-help</property>
               </object>
               <packing>
                 <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="cancel_button">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">baseline</property>
+                <property name="valign">baseline</property>
+                <property name="border_width">3</property>
+                <property name="is_important">True</property>
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="use_underline">True</property>
+                <property name="stock_id">gtk-quit</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="homogeneous">True</property>
               </packing>
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
         </child>

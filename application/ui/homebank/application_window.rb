@@ -1,5 +1,5 @@
 module Homebank
-  class ApplicationWindow < Gtk::Dialog
+  class ApplicationWindow < Gtk::Window
     # Register the class in the GLib world
     type_register
 
