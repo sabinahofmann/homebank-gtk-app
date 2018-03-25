@@ -60,14 +60,14 @@ module Homebank
       # save
       save_button.signal_connect 'clicked' do |button|
         item.bank_name = bank_name_entry.text
-        item.start_line = start_line_entry.value
-        item.date = date_entry.value
-        item.payment = payment_entry.value
-        item.tag = tag_entry.value
-        item.payee = payee_entry.value
-        item.memo = memo_entry.value
-        item.amount = amount_entry.value
-        item.category = category_entry.value
+        item.start_line = start_line_entry.value_as_int
+        item.date = date_entry.value_as_int
+        item.payment = payment_entry.value_as_int
+        item.tag = tag_entry.value_as_int
+        item.payee = payee_entry.value_as_int
+        item.memo = memo_entry.value_as_int
+        item.amount = amount_entry.value_as_int
+        item.category = category_entry.value_as_int
         item.notes = notes_text_view.buffer.text
         item.save!
         close
