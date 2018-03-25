@@ -5,22 +5,23 @@ module Homebank
 
     attr_reader :homebank_csv, :csv_file, :account, :timestamp
 
-    def initialize(options={})
+    def initialize(**options)
       @csv_file = options[:file].filename
       @account = options[:account]
       @homebank_csv = homebank_filename
-      @timestamp = File.exists?(@homebank_csv) ? File.mtime(@homebank_csv) : Time.now
+      @timestamp = @homebank_csv && File.exists?(@homebank_csv) ? File.mtime(@homebank_csv) : Time.now
     end
 
     def generate
-      touch_csv
-      File.mtime(@homebank_csv) > @timestamp ? true : false
+      if @homebank_csv
+        touch_csv
+        File.mtime(@homebank_csv) > @timestamp ? true : false
+      end
     end
 
     private
     def touch_csv
       csv_data = translate_data
-
       if csv_data.any?
         File.delete(@homebank_csv) if File.exists?(@homebank_csv)
 
@@ -40,28 +41,28 @@ module Homebank
       options = { col_sep: ';', encoding: 'iso-8859-1:utf-8', force_quotes: false }
       if @csv_file
         CSV.foreach(@csv_file, options).with_index do |row, i|
-          if i >= @account.start_line && row.any?
-            tag = row[@account.tag]
-            payee = row[@account.payee] || ""
-            memo = row[@account.memo] || ""
-            amount = row[@account.amount]
-            category = row[@account.category]
-            payment = @account.payment # from 0=none to 10=FI fee, import transaction with payment type=5 (internal xfer)
+          if i >= @account.start_line_csv && row.any?
+            tag = row[@account.tag_csv] || ""
+            payee = row[@account.payee_csv] || ""
+            memo = row[@account.memo_csv] || ""
+            amount = row[@account.amount_csv]
+            category = row[@account.category_csv]
+            payment = @account.payment
 
             data << [date(row), payment, '', payee.gsub("\"", ""), memo.gsub("\"", ""), amount, category, tag.gsub("\"", "")]
           end
         end
       end
-      data
+      return data
     end
 
     def date(row)
-      date = row[@account.date] || Time.now.strftime("%d-%m-%Y")
+      date = row[@account.date_csv] || Time.now.strftime("%d-%m-%Y")
       date.gsub(".", "-")
     end
 
     def homebank_filename
-      "#{File.dirname(@csv_file)}/#{@account.bank_name}-homebank-import.csv"
+      "#{File.dirname(@csv_file)}/#{@account.bank_name}-homebank-import.csv" if @csv_file
     end
   end
 end

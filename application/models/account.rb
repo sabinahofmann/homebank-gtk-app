@@ -9,15 +9,19 @@ module Homebank
 
     attr_accessor *PROPERTIES
 
-    def initialize(options = {})
-      if user_data_path = options[:user_data_path]
+    %w(date tag memo amount category payee start_line).each do |field|
+      field_csv = "#{field}_csv"
+      define_method(field_csv) { self.send(field)-1 }
+    end
+
+    def initialize(**options)
+      if options[:user_data_path]
         # New item. When saved, it will be placed under the :user_data_path value
         @id = SecureRandom.uuid
-        @creation_datetime = Time.now.to_s
-        @filename = "#{user_data_path}/#{id}.json"
-      elsif filename = options[:filename]
-        # Load an existing item
-        load_from_file filename
+        @creation_datetime = Time.now
+        @filename = "#{options[:user_data_path]}/#{id}.json"
+      elsif options[:filename]
+        load_from_file options[:filename] # Load an existing item
       else
         raise ArgumentError, 'Please specify the :user_data_path for new item or the :filename to load existing'
       end
@@ -59,7 +63,6 @@ module Homebank
       PROPERTIES.each do |prop|
         result[prop] = self.send prop
       end
-
       result.to_json
     end
   end
