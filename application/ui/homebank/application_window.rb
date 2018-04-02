@@ -13,6 +13,8 @@ module Homebank
         bind_template_child 'status_bar'
         bind_template_child 'cancel'
         bind_template_child 'new_account'
+        bind_template_child 'main_box'
+        bind_template_child 'about'
       end
     end
 
@@ -22,7 +24,18 @@ module Homebank
       set_title 'CSV Convertor'
 
       #status_bar
-      context_id = status_bar.get_context_id("status")
+      @account_counter = 0
+      @context_id = status_bar.get_context_id("status")
+
+      #scrolled window
+      main_box.remove(account_list_box)
+      scrolled = Gtk::ScrolledWindow.new
+      scrolled.set_policy(:never, :automatic)
+      viewport  = Gtk::Viewport.new(scrolled.hadjustment, scrolled.vadjustment)
+      account_list_box.expand = true
+      viewport.add(account_list_box)
+      scrolled.add(viewport)
+      main_box.add(scrolled)
 
       # menu bar
       cancel.signal_connect "activate" do
@@ -33,15 +46,20 @@ module Homebank
         add_account
       end
 
+      about.signal_connect 'activate' do
+        Homebank::AboutDialog.new(application).present
+      end
+
       # add new account
       add_new_account_button.signal_connect 'clicked' do |button|
         add_account
       end
-
-      accounts = load_accounts
-
+      # loads exists accounts
+      load_accounts
       # push statusbar
-      on_push_status_bar(context_id, accounts.size)
+      on_push_status_bar
+      # show all widgets
+      show_all
     end
 
     def add_account
@@ -58,11 +76,11 @@ module Homebank
       items.each do |item|
         account_list_box.add Homebank::AccountListBoxRow.new(item)
       end
-      items
+      @account_counter = items.size
     end
 
-    def on_push_status_bar(context_id, counter)
-      status_bar.push(context_id, "Accounts: #{counter}")
+    def on_push_status_bar
+      status_bar.push(@context_id, "Accounts: #{@account_counter}")
     end
   end
 end
