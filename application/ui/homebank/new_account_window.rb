@@ -53,10 +53,7 @@ module Homebank
         item.delete!
 
         #Locate the application window
-        application_window = application.windows.find { |w| w.is_a? Homebank::ApplicationWindow }
-        accounts = application_window.load_accounts
-        context_id = application_window.status_bar.get_context_id("status")
-        application_window.on_push_status_bar(context_id, accounts.size)
+        locate_application_window
         close
       end
 
@@ -75,10 +72,13 @@ module Homebank
         item.save!
         close
         # Locate the application window
+        locate_application_window
+      end
+
+      def locate_application_window
         application_window = application.windows.find { |w| w.is_a? Homebank::ApplicationWindow }
-        accounts = application_window.load_accounts
-        context_id = application_window.status_bar.get_context_id("status")
-        application_window.on_push_status_bar(context_id, accounts.size)
+        application_window.load_accounts
+        application_window.on_push_status_bar
       end
     end
   end
