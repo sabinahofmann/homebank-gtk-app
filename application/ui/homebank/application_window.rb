@@ -15,6 +15,8 @@ module Homebank
         bind_template_child 'new_account'
         bind_template_child 'main_box'
         bind_template_child 'about'
+        bind_template_child 'contents'
+        bind_template_child 'delete_all' #TODO
       end
     end
 
@@ -38,11 +40,15 @@ module Homebank
       main_box.add(scrolled)
 
       # menu bar
-      cancel.signal_connect "activate" do
+      cancel.signal_connect 'activate' do
         close
       end
 
-      new_account.signal_connect "activate" do
+      contents.signal_connect 'activate' do
+        on_contents
+      end
+
+      new_account.signal_connect 'activate' do
         add_account
       end
 
@@ -63,8 +69,8 @@ module Homebank
     end
 
     def add_account
-      new_account_window = Homebank::NewAccountWindow.new(application, Homebank::Account.new(user_data_path: application.user_data_path))
-      new_account_window.present
+      account_window = Homebank::NewAccountWindow.new(application, Homebank::Account.new(user_data_path: application.user_data_path))
+      account_window.present
     end
 
     def load_accounts
@@ -76,11 +82,40 @@ module Homebank
       items.each do |item|
         account_list_box.add Homebank::AccountListBoxRow.new(item)
       end
+
       @account_counter = items.size
     end
 
     def on_push_status_bar
       status_bar.push(@context_id, "Accounts: #{@account_counter}")
+    end
+
+    def on_contents
+      m_dialog = Gtk::MessageDialog.new(parent: self, flags: :modal, type: :info, buttons_type: :ok,
+                                      message: 'Do you want to read the manual online?')
+      m_dialog.title = 'Online documentation'
+      m_dialog.secondary_text = 'You will be redirected to the documentation website where the help ' \
+          'pages are maintained and translated.'
+      m_dialog.image = Gtk::Image.new(stock: Gtk::Stock::INFO, icon: Gtk::IconSize::DIALOG)
+
+      lbutton = Gtk::LinkButton.new('https://github.com/sabinahofmann/homebank-gtk-app', 'Read online')
+      lbutton.use_underline = true
+      lbutton.image = Gtk::Image.new(stock: Gtk::Stock::HELP, icon: Gtk::IconSize::DIALOG)
+      lbutton.set_relief(:normal)
+
+      m_dialog.action_area.add(lbutton)
+      m_dialog.show_all
+      m_dialog.run
+      m_dialog.destroy
+    end
+
+    def on_info
+      m_dialog = Gtk::MessageDialog.new(parent: self, flags: :modal, type: :question, 
+          buttons_type: :ok_cancel, message: 'Do you really want to delete?')
+      m_dialog.title = 'Delete confirmation'
+      response = m_dialog.run
+      m_dialog.destroy
+      return response
     end
   end
 end
