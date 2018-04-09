@@ -39,6 +39,11 @@ module Homebank
       scrolled.add(viewport)
       main_box.add(scrolled)
 
+      # delete
+      delete_all.signal_connect 'activate' do
+        on_info
+      end
+
       # menu bar
       cancel.signal_connect 'activate' do
         close
@@ -48,15 +53,15 @@ module Homebank
         on_contents
       end
 
-      new_account.signal_connect 'activate' do
-        add_account
-      end
-
       about.signal_connect 'activate' do
         Homebank::AboutDialog.new(application).present
       end
 
       # add new account
+      new_account.signal_connect 'activate' do
+        add_account
+      end
+
       add_new_account_button.signal_connect 'clicked' do |button|
         add_account
       end
@@ -91,7 +96,7 @@ module Homebank
     end
 
     def on_contents
-      m_dialog = Gtk::MessageDialog.new(parent: self, flags: :modal, type: :info, buttons_type: :ok,
+      m_dialog = Gtk::MessageDialog.new(parent: self, flags: :modal, type: :info, buttons_type: :none,
                                       message: 'Do you want to read the manual online?')
       m_dialog.title = 'Online documentation'
       m_dialog.secondary_text = 'You will be redirected to the documentation website where the help ' \
