@@ -21,7 +21,6 @@ module Homebank
 
       # select file
       file_chooser_button.signal_connect 'selection_changed'  do |w|
-        puts "change file"
         file_changed(file_chooser_button)
       end
 
@@ -44,12 +43,6 @@ module Homebank
       end
     end
 
-    def application
-      parent = self.parent
-      parent = parent.parent while !parent.is_a? Gtk::Dialog
-      parent.application
-    end
-
     # file method
     def file_changed(choo_file)
       file = choo_file.filename
@@ -57,19 +50,17 @@ module Homebank
     end
 
     def on_info
-      md = Gtk::MessageDialog.new :parent => self, 
-          :flags => :destroy_with_parent, :type => :info, 
-          :buttons_type => :close, :message => "Converting completed"
-      md.run
-      md.destroy
+      m_dialog = Gtk::MessageDialog.new(parent: self, flags: :destroy_with_parent, type: :info,
+                                  buttons_type: :close, message: 'Converting completed')
+      m_dialog.run
+      m_dialog.destroy
     end
 
     def on_erro
-      md = Gtk::MessageDialog.new :parent => self, 
-          :flags => :modal, :type => :error, 
-          :buttons_type => :close, :message => "Error converting file"
-      md.run
-      md.destroy
+      m_dialog = Gtk::MessageDialog.new(parent: self, flags: :modal, type: :error, buttons_type: :close,
+                                  message: 'Error converting file')
+      m_dialog.run
+      m_dialog.destroy
     end
   end
 end

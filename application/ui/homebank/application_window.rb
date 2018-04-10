@@ -41,7 +41,10 @@ module Homebank
 
       # delete
       delete_all.signal_connect 'activate' do
-        on_info
+        if delete_confirmation == Gtk::ResponseType::OK
+          FileUtils.rm_f Dir.glob("#{application.user_data_path}/*")
+          load_accounts && push_status_bar
+        end
       end
 
       # menu bar
@@ -68,7 +71,7 @@ module Homebank
       # loads exists accounts
       load_accounts
       # push statusbar
-      on_push_status_bar
+      push_status_bar
       # show all widgets
       show_all
     end
@@ -91,7 +94,7 @@ module Homebank
       @account_counter = items.size
     end
 
-    def on_push_status_bar
+    def push_status_bar
       status_bar.push(@context_id, "Accounts: #{@account_counter}")
     end
 
@@ -114,13 +117,13 @@ module Homebank
       m_dialog.destroy
     end
 
-    def on_info
+    def delete_confirmation
       m_dialog = Gtk::MessageDialog.new(parent: self, flags: :modal, type: :question, 
           buttons_type: :ok_cancel, message: 'Do you really want to delete?')
       m_dialog.title = 'Delete confirmation'
       response = m_dialog.run
       m_dialog.destroy
-      return response
+      response
     end
   end
 end
