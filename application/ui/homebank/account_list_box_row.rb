@@ -16,20 +16,22 @@ module Homebank
     def initialize(account)
       super()
 
-      account_title_label.text = account.bank_name || ""
+      account_title_label.text = account.bank_name || ''
 
       import_button.signal_connect 'clicked' do
-        cvs_convert_window = Homebank::CsvConvertWindow.new(application, account)
-        cvs_convert_window.present
+        Homebank::CsvConvertWindow.new(application, account).present
       end
 
       edit_button.signal_connect 'clicked' do
-        new_account_window = Homebank::NewAccountWindow.new(application, account)
-        new_account_window.present
+        Homebank::NewAccountWindow.new(application, account).present
       end
 
       delete_button.signal_connect 'clicked' do
         account.delete!
+
+        # Locate the application window
+        application_window = application.windows.find { |w| w.is_a? Homebank::ApplicationWindow }
+        application_window.load_accounts
       end
     end
 
