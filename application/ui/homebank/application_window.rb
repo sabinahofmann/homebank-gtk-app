@@ -16,7 +16,7 @@ module Homebank
         bind_template_child 'main_box'
         bind_template_child 'about'
         bind_template_child 'contents'
-        bind_template_child 'delete_all' #TODO
+        bind_template_child 'delete_all'
       end
     end
 
@@ -43,7 +43,7 @@ module Homebank
       delete_all.signal_connect 'activate' do
         if delete_confirmation == Gtk::ResponseType::OK
           FileUtils.rm_f Dir.glob("#{application.user_data_path}/*")
-          load_accounts && push_status_bar
+          load_accounts
         end
       end
 
@@ -70,8 +70,6 @@ module Homebank
       end
       # loads exists accounts
       load_accounts
-      # push statusbar
-      push_status_bar
       # show all widgets
       show_all
     end
@@ -90,8 +88,9 @@ module Homebank
       items.each do |item|
         account_list_box.add Homebank::AccountListBoxRow.new(item)
       end
-
+      # push statusbar
       @account_counter = items.size
+      push_status_bar
     end
 
     def push_status_bar
@@ -119,7 +118,7 @@ module Homebank
 
     def delete_confirmation
       m_dialog = Gtk::MessageDialog.new(parent: self, flags: :modal, type: :question, 
-          buttons_type: :ok_cancel, message: 'Do you really want to delete?')
+          buttons_type: :none, message: 'Do you really want to delete?')
       m_dialog.title = 'Delete confirmation'
       response = m_dialog.run
       m_dialog.destroy

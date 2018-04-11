@@ -1,5 +1,5 @@
 module Homebank
-  class NewAccountWindow < Gtk::Dialog
+  class NewAccountWindow < Gtk::Window
     # Register the class in the GLib world
     type_register
 
@@ -51,9 +51,6 @@ module Homebank
       # delete
       delete_button.signal_connect 'clicked' do
         item.delete!
-
-        #Locate the application window
-        locate_application_window
         close
       end
 
@@ -78,7 +75,6 @@ module Homebank
       def locate_application_window
         application_window = application.windows.find { |w| w.is_a? Homebank::ApplicationWindow }
         application_window.load_accounts
-        application_window.push_status_bar
       end
     end
   end

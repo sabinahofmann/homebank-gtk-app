@@ -1,7 +1,7 @@
 require 'csv'
 
 module Homebank
-  class CsvConvertWindow < Gtk::Dialog
+  class CsvConvertWindow < Gtk::Window
     type_register
 
     class << self
