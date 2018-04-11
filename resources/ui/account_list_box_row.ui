@@ -63,7 +63,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="tooltip_text" translatable="yes">Edit account</property>
-                    <property name="margin_right">1</property>
+                    <property name="margin_right">3</property>
                     <property name="image">edit_image</property>
                   </object>
                   <packing>
@@ -78,7 +78,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="tooltip_text" translatable="yes">Import CSV</property>
-                    <property name="margin_left">1</property>
+                    <property name="margin_right">3</property>
                     <property name="image">import_image</property>
                   </object>
                   <packing>
@@ -93,6 +93,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="tooltip_text" translatable="yes">Delete account</property>
+                    <property name="margin_right">3</property>
                     <property name="image">delete_image</property>
                   </object>
                   <packing>
