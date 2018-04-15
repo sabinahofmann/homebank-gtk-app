@@ -11,7 +11,7 @@ module Homebank
               website: 'https://github.com/sabinahofmann/homebank-gtk-app',
               comments: 'Converts any csv in readable format for importing into the homebank application',
               authors: %w(Sabina Hofmann),
-              logo_icon_name: 'gtk3-demo',
+              logo: GdkPixbuf::Pixbuf.new(file: 'csv_convertor_image.png'),
               title: 'About CSV Convertor for Homebank',
               icon_name: 'help-about')
 
