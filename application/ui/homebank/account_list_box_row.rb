@@ -23,7 +23,7 @@ module Homebank
       end
 
       edit_button.signal_connect 'clicked' do
-        Homebank::NewAccountWindow.new(application, account).present
+        Homebank::AccountWindow.new(application, account).present
       end
 
       delete_button.signal_connect 'clicked' do

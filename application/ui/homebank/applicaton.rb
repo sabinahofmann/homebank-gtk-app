@@ -13,8 +13,7 @@ module Homebank
       end
 
       signal_connect :activate do |application|
-        window = Homebank::ApplicationWindow.new(application)
-        window.present
+        Homebank::ApplicationWindow.new(application).present
       end
     end
   end
