@@ -9,6 +9,11 @@
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
+  <object class="GtkImage" id="cancel">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-close</property>
+  </object>
   <object class="GtkAdjustment" id="category_int">
     <property name="lower">1</property>
     <property name="upper">100</property>
@@ -22,6 +27,11 @@
     <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
+  </object>
+  <object class="GtkImage" id="delete">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-delete</property>
   </object>
   <object class="GtkAdjustment" id="memo_int">
     <property name="lower">1</property>
@@ -42,6 +52,11 @@
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
+  <object class="GtkImage" id="save">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-save</property>
+  </object>
   <object class="GtkAdjustment" id="start_line_int">
     <property name="lower">1</property>
     <property name="upper">100</property>
@@ -56,9 +71,10 @@
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
-  <template class="HomebankNewAccountWindow" parent="GtkWindow">
+  <template class="HomebankAccountWindow" parent="GtkWindow">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="icon_name">accessories-text-editor</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -475,6 +491,7 @@
                 <property name="receives_default">True</property>
                 <property name="margin_right">5</property>
                 <property name="margin_bottom">5</property>
+                <property name="image">save</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -490,6 +507,7 @@
                 <property name="receives_default">True</property>
                 <property name="margin_right">5</property>
                 <property name="margin_bottom">5</property>
+                <property name="image">delete</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -505,6 +523,7 @@
                 <property name="receives_default">True</property>
                 <property name="margin_right">5</property>
                 <property name="margin_bottom">5</property>
+                <property name="image">cancel</property>
               </object>
               <packing>
                 <property name="expand">True</property>

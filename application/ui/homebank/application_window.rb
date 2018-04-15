@@ -1,5 +1,8 @@
+require_relative 'concerns/confirmationable'
+
 module Homebank
   class ApplicationWindow < Gtk::Window
+    include Concerns::Confirmationable
     # Register the class in the GLib world
     type_register
 
@@ -23,8 +26,6 @@ module Homebank
     def initialize(application)
       super application: application
 
-      set_title 'CSV Convertor'
-
       #status_bar
       @account_counter = 0
       @context_id = status_bar.get_context_id("status")
@@ -41,10 +42,7 @@ module Homebank
 
       # delete
       delete_all.signal_connect 'activate' do
-        if delete_confirmation == Gtk::ResponseType::OK
-          FileUtils.rm_f Dir.glob("#{application.user_data_path}/*")
-          load_accounts
-        end
+        delete_confirmation
       end
 
       # menu bar
@@ -53,18 +51,18 @@ module Homebank
       end
 
       contents.signal_connect 'activate' do
-        on_contents
+        confirmation_contents
       end
 
       about.signal_connect 'activate' do
-        Homebank::AboutDialog.new(application).present
+        Homebank::AboutDialog.show(self)
       end
 
-      # add new account
       new_account.signal_connect 'activate' do
         add_account
       end
 
+      # add new account
       add_new_account_button.signal_connect 'clicked' do |button|
         add_account
       end
@@ -75,7 +73,7 @@ module Homebank
     end
 
     def add_account
-      account_window = Homebank::NewAccountWindow.new(application, Homebank::Account.new(user_data_path: application.user_data_path))
+      account_window = Homebank::AccountWindow.new(application, Homebank::Account.new(user_data_path: application.user_data_path))
       account_window.present
     end
 
@@ -97,32 +95,18 @@ module Homebank
       status_bar.push(@context_id, "Accounts: #{@account_counter}")
     end
 
-    def on_contents
-      m_dialog = Gtk::MessageDialog.new(parent: self, flags: :modal, type: :info, buttons_type: :none,
-                                      message: 'Do you want to read the manual online?')
-      m_dialog.title = 'Online documentation'
-      m_dialog.secondary_text = 'You will be redirected to the documentation website where the help ' \
-          'pages are maintained and translated.'
-      m_dialog.image = Gtk::Image.new(stock: Gtk::Stock::INFO, icon: Gtk::IconSize::DIALOG)
-
-      lbutton = Gtk::LinkButton.new('https://github.com/sabinahofmann/homebank-gtk-app', 'Read online')
-      lbutton.use_underline = true
-      lbutton.image = Gtk::Image.new(stock: Gtk::Stock::HELP, icon: Gtk::IconSize::DIALOG)
-      lbutton.set_relief(:normal)
-
-      m_dialog.action_area.add(lbutton)
-      m_dialog.show_all
-      m_dialog.run
-      m_dialog.destroy
-    end
-
     def delete_confirmation
-      m_dialog = Gtk::MessageDialog.new(parent: self, flags: :modal, type: :question, 
-          buttons_type: :none, message: 'Do you really want to delete?')
-      m_dialog.title = 'Delete confirmation'
-      response = m_dialog.run
-      m_dialog.destroy
-      response
+      dialog = confirmation_dialog({ title: 'Delete confirmation',
+                                     message: 'Do you really want to delete?',
+                                     icon: Gtk::Stock::DIALOG_QUESTION,
+                                     button_type_ok: true, button_type_cancel: true })
+
+      dialog.signal_connect('response') do |widget, response|
+        if response == Gtk::ResponseType::OK
+          FileUtils.rm_f Dir.glob("#{application.user_data_path}/*")
+          load_accounts && dialog.destroy
+        end
+      end
     end
   end
 end

@@ -1,12 +1,12 @@
 module Homebank
-  class NewAccountWindow < Gtk::Window
+  class AccountWindow < Gtk::Window
     # Register the class in the GLib world
     type_register
 
     class << self
       def init
         # Set the template from the resources binary
-        set_template resource: '/de/hofmann/homebank-gtk/ui/new_account_window.ui'
+        set_template resource: '/de/hofmann/homebank-gtk/ui/account_window.ui'
 
         # Bind the window's widgets
         bind_template_child 'id_value_label'
@@ -52,6 +52,7 @@ module Homebank
       delete_button.signal_connect 'clicked' do
         item.delete!
         close
+        locate_application_window
       end
 
       # save

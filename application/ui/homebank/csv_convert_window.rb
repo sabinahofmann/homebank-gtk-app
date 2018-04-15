@@ -1,7 +1,9 @@
 require 'csv'
+require_relative 'concerns/confirmationable'
 
 module Homebank
   class CsvConvertWindow < Gtk::Window
+    include Concerns::Confirmationable
     type_register
 
     class << self
@@ -17,24 +19,21 @@ module Homebank
     def initialize(application, account)
       super application: application
 
-      file_chooser_button.current_folder = GLib.home_dir
+      filter = Gtk::FileFilter.new
+      filter.name = 'CSV Files'
+      filter.add_pattern('*.csv')
+      file_chooser_button.add_filter(filter)
 
       # select file
+      file_chooser_button.current_folder = GLib.home_dir
       file_chooser_button.signal_connect 'selection_changed'  do |w|
         file_changed(file_chooser_button)
       end
 
-      # filter only cvs
-      filter = Gtk::FileFilter.new
-      filter.name = "CSV Files"
-      filter.add_pattern('*.csv')
-      file_chooser_button.add_filter(filter)
-
       # convert cvs
       convert_button.signal_connect 'clicked' do
-        options = { account: account, file: file_chooser_button }
-        result = Homebank::CsvConvertor.new(options).generate
-        result == true ? on_info : on_erro
+        result = Homebank::CsvConvertor.new({account: account, file: file_chooser_button}).generate
+        result == true ? info_confirmation : error_confirmation
       end
 
       # cancel
@@ -49,18 +48,20 @@ module Homebank
       file = "" if file == nil
     end
 
-    def on_info
-      m_dialog = Gtk::MessageDialog.new(parent: self, flags: :destroy_with_parent, type: :info,
-                                  buttons_type: :close, message: 'Converting completed')
-      m_dialog.run
-      m_dialog.destroy
+    def info_confirmation
+      dialog = confirmation_dialog({message: 'Converting completed', icon: Gtk::Stock::DIALOG_INFO,
+                                    button_type_ok: true})
+      dialog.signal_connect('response') do |widget, response|
+        dialog.destroy && close if response == Gtk::ResponseType::OK
+      end
     end
 
-    def on_erro
-      m_dialog = Gtk::MessageDialog.new(parent: self, flags: :modal, type: :error, buttons_type: :close,
-                                  message: 'Error converting file')
-      m_dialog.run
-      m_dialog.destroy
+    def error_confirmation
+      dialog = confirmation_dialog({message: 'Error converting file',
+                                    icon: Gtk::Stock::DIALOG_ERROR, button_type_ok: true})
+      dialog.signal_connect('response') do |widget, response|
+        dialog.destroy if response == Gtk::ResponseType::OK
+      end
     end
   end
 end
