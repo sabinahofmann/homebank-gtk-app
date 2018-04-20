@@ -8,8 +8,8 @@ module Homebank
 
       @user_data_path = File.expand_path('~/.homebank-gtk')
       unless File.directory?(@user_data_path)
-        puts "First run. Creating user's application path: #{@user_data_path}"
         FileUtils.mkdir_p(@user_data_path)
+        Homebank::Generators::InstallGenerator.new(@user_data_path).start_setup
       end
 
       signal_connect :activate do |application|
