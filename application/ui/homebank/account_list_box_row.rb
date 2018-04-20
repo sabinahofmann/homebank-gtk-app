@@ -28,7 +28,6 @@ module Homebank
 
       delete_button.signal_connect 'clicked' do
         account.delete!
-
         # Locate the application window
         application_window = application.windows.find { |w| w.is_a? Homebank::ApplicationWindow }
         application_window.load_accounts

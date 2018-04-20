@@ -66,10 +66,8 @@ module Homebank
       add_new_account_button.signal_connect 'clicked' do |button|
         add_account
       end
-      # loads exists accounts
-      load_accounts
-      # show all widgets
-      show_all
+      # loads exists accounts and show all widgets
+      load_accounts && show_all
     end
 
     def add_account

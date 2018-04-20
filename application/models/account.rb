@@ -29,7 +29,6 @@ module Homebank
     # Loads an item from a file
     def load_from_file(filename)
       properties = JSON.parse(File.read(filename))
-
       # Assign the properties
       PROPERTIES.each do |property|
         self.send "#{property}=", properties[property.to_s]
