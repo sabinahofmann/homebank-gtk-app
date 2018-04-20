@@ -2,11 +2,11 @@ module Homebank::Generators
   class InstallGenerator
 
     ACCOUNT_INGDIBA = {
-        id: '0', bank_name: 'IngDiba', notes: 'generatet example for DKB', start_line: 8, date: 1,
+        id: '0', bank_name: 'INGDIBA', notes: 'generatet example for DKB', start_line: 8, date: 1,
         payment: 0, tag: 4,  payee: 4, memo: 5, amount: 8, category: 3, filename: ''
     }
     ACCOUNT_DKB = {
-        id: '0', bank_name: 'IngDiba', notes: 'generatet example for DKB', start_line: 8, date: 1,
+        id: '0', bank_name: 'DKB', notes: 'generatet example for DKB', start_line: 8, date: 1,
         payment: 0, tag: 4,  payee: 4, memo: 5, amount: 8, category: 3, filename: ''
       }
 
