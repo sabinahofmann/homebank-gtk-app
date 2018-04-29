@@ -6,21 +6,25 @@ can be imported by the personal finance software [HomeBank](http://homebank.free
 # Installation
 Please checkout the project at your home directory, where all of other your applications are.
 
-### Requirements
-This code is written in ruby and gtk3.
-Please make sure to have ruby >= 2.5 and gkt installed on your system.
-
-### Installation
 By default two exemplary account konfirguations are generated. The one is for
 the germany credit bank DKB. The other account is for the bank IngDiBa. 
 Both accounts can be modified or deleted at any time.
 
-#### Important Note:
+### Requirements
+This code is written in ruby and gtk3.
+Please make sure to have ruby >= 2.5 and gkt installed on your system.
+
+
+
+###### Important Note:
 It has been tested on OpenBSD.
 
 # Getting Started
 Call the script directly from the checked out project directory with:
+
+```
     $ ./homebank-gtk
+```
 
 A main window appears with a menu and two generated examples of confirguation accounts.
 
@@ -74,7 +78,7 @@ The confirguation of this file is:
 
 ```
 1 xx-xx-xxxx;0;"";credit card;xxxx-xxxx xxx xxx;0,01;Gutschrift;credit card
-2 xx-xx-xxxx;0;"";paypal;xxxx-xxxx xxx xxx;-14,40;Lastschrift;papayl
+2 xx-xx-xxxx;0;"";paypal;xxxx-xxxx xxx xxx;-14,40;Lastschrift;paypal
 ```
 
 
