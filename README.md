@@ -50,7 +50,7 @@ extension "<account-name>-homebank-import.cvs".
 
 ![Conert CSV](/docu/convert_csv.png)
 
-## Basic HomeBank knowledge is highly recommended
+###### Basic HomeBank knowledge is highly recommended
 
 
 ##### Example of DKB CSV report:
@@ -67,7 +67,10 @@ extension "<account-name>-homebank-import.cvs".
 9 "xx.xx.xxxx";"xx.xx.xxxx";"Lastschrift";"paypal";"xxxx-xxxx xxx xxx";"xxxxxx";"xxxxxx";"-14,40";"";"";"";
 ```
 
-##### Result of Mapping DKB CSV report into readable CSV file for HomeBank
+The confirguation of this file is:
+![Edit mode](/docu/edit_mode.png)
+
+##### Result after converting DKB CSV report into readable CSV file for HomeBank:
 
 ```
 1 xx-xx-xxxx;0;"";credit card;xxxx-xxxx xxx xxx;0,01;Gutschrift;credit card
