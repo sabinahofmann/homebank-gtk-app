@@ -23,29 +23,29 @@ Call the ruby script direct from the project directory with
   $ ./homebank-gtk
 
 A main window appears with a menu and before generated example confirguations accounts.
-![main window](/docum/main_window.png)
+![main window](/docu/main_window.png)
 
 For the desired report of transaction of your bank of choice you have to create or use an exists confirguation ccount.
 
 Please push the button "Add account" or "Import CSV".
-![main window](/docum/add_account.png)
+![main window](/docu/add_account.png)
 
 In edit mode of an configuration account enter the linenumber in the field "Start line at". It stands
 for the start of the entries of your transactions in the exported CSV file.
 
 In the fields "Date", "Payment", "Tag", "Payee", "Memo", "Amount", "Category" the columns you can
 to determine date, amounts etc. - more explanations see [HomeBank CSV file format](http://homebank.free.fr/help/misc-csvformat.html)
-![main window](/docum/edit_mode.png)
+![main window](/docu/edit_mode.png)
 
 For converting your exported file to a readable format for HomeBank application click on the button "Import CSV"
 in the main window. 
-![main window](/docum/import_csv.png)
+![main window](/docu/import_csv.png)
 
 
 Select the desired CSV exported report and press the button "Convert" button to start the process. 
 The newly generated CSV file is stored in the same directory as the original file and has the file 
 extension <account-name>-homebank-import.cvs.
-![main window](/docum/convert_csv.png)
+![main window](/docu/convert_csv.png)
 
 ## Basic HomeBank knowledge is highly recommended
 
