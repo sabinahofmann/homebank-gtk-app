@@ -12,8 +12,10 @@ Both accounts can be modified or deleted at any time.
 
 ### Requirements
 This code is written in ruby and gtk3.
-Please make sure to have ruby >= 2.5 and gkt installed on your system.
+Please make sure to have ruby >= 2.5 and the gem gkt3 installed on your system.
 
+Note: If you have any problems with 'gobject-introspection', please make sure to 
+install the lib 'glade' before gtk3.
 
 
 ###### Important Note:
