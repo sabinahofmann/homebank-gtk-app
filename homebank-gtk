@@ -5,7 +5,7 @@ require 'fileutils'
 
 # Require all ruby files in the application folder recursively
 application_root_path = File.expand_path(__dir__)
-Dir[File.join(application_root_path, '**', '*.rb')].each { |file| require file }
+Dir.glob(File.join(application_root_path, '**', '*.rb'), &method(:require))
 
 # Define the source & target files of the glib-compile-resources command
 resource_xml = File.join(application_root_path, 'resources', 'gresources.xml')
