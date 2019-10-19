@@ -1,28 +1,33 @@
 CSV convertor for HomeBank
 =======================================
-A desktop app that converts any account CSV reports from a export of a bank. The converted CSV file 
+It's a desktop app that converts any CSV transaction reports from a bank account. The converted CSV-file 
 can be imported by the personal finance software [HomeBank](http://homebank.free.fr/en/index.php)
 
 # Installation
-Please checkout the project at your home directory, where all of other your applications are.
+Please checkout the project at your home directory from GitHub master branch.
 
-By default two exemplary account konfirguations are generated. The one is for
-the germany credit bank DKB. The other account is for the bank IngDiBa. 
+
+By default two exemplary account confirguations are generated. One of them is for
+the germany credit bank DKB account. The other account is for the bank IngDiBa. 
 Both accounts can be modified or deleted at any time.
 
 ### Requirements
 This code is written in ruby and gtk3.
-Please make sure to have ruby >= 2.5 and the gem gkt3 installed on your system.
+Please make sure to have ruby **>= 2.5** and the **gem gkt3** installed on your system.
 
 Note: If you have any problems with 'gobject-introspection', please make sure to 
-install the lib 'glade' before gtk3.
+install the **lib 'glade'** on your system before the gem gtk3.
+
+###### with ruby 2.6
+If the call `./homebank-gtk` contains the error `Cannot load specified object - /usr/local/lib/ruby/gems/2.6/gems/cairo-1.16.4/lib/cairo.so`,
+you need to install the **gem cairo**. 
 
 
 ###### Important Note:
-It has been tested on OpenBSD.
+It has been tested on OpenBSD with ruby 2.5, 2.6. On Ubuntu, Debain with ruby 2.5.
 
 # Getting Started
-Call the script directly from the checked out project directory with:
+Call the script directly from the checked out project-directory with:
 
 ```
     $ ./homebank-gtk
@@ -32,26 +37,25 @@ A main window appears with a menu and two generated examples of confirguation ac
 
 ![Main window](/docu/main_window.png)
 
-For the desired report of transaction of your bank of choice, you have to create or use an exists 
-confirguation ccount. Please push the button "Add account" or "Import CSV".
+For the desired report of your bank of choice, you have to create or use an exists 
+confirguation account. Please push the button "Add account", "Edit Account" or "Import CSV".
 
 ![New account](/docu/add_account.png)
 
 In edit mode of an configuration account enter the linenumber in the field "Start line at". It stands
-for the start of the entries of your transactions in the exported CSV file.
-In the fields "Date", "Payment", "Tag", "Payee", "Memo", "Amount", "Category" the columns you can
-to determine date, amounts etc. - more explanations see [HomeBank CSV file format](http://homebank.free.fr/help/misc-csvformat.html)
+for the start of the entries of your transactions in the exported CSV-file.
+The fields "Date", "Payment", "Tag", "Payee", "Memo", "Amount", "Category" are use
+to determine the columns in the exportert CVS file - more explanations see [HomeBank CSV file format](http://homebank.free.fr/help/misc-csvformat.html)
 
 ![Edit mode](/docu/edit_mode.png)
 
-For converting your exported file to a readable format for HomeBank application click on the button "Import CSV"
-in the main window. 
+For converting your exported file to a readable format for HomeBank application use the button "Import CSV"
+in the main window.
 
 ![Import window](/docu/import_csv.png)
 
-
-Select the desired CSV exported report and press the button "Convert" button to start the process. 
-The newly generated CSV file is stored in the same directory as the original file and has the file 
+Select the desired CSV exported report and press the button "Convert" to start the process. 
+The newly generated CSV file will be stored in the same directory as the original file and has the file 
 extension "<account-name>-homebank-import.cvs".
 
 ![Conert CSV](/docu/convert_csv.png)
