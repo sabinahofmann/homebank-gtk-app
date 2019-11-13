@@ -3,8 +3,8 @@ module Homebank
     class InstallGenerator
 
       ACCOUNT_INGDIBA = {
-          id: '1', bank_name: 'INGDiBa', notes: 'an example for INGDiBa', start_line: 14, date: 1,
-          payment: 0, tag: 3,  payee: 3, memo: 4, amount: 8, category: 4, filename: ''
+          id: '1', bank_name: 'INGDiBa', notes: 'an example for INGDiBa', start_line: 16, date: 1,
+          payment: 0, tag: 3,  payee: 5, memo: 5, amount: 8, category: 4, filename: ''
       }
       ACCOUNT_DKB = {
           id: '2', bank_name: 'DKB', notes: 'an example for DKB', start_line: 8, date: 1,
