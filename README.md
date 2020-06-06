@@ -8,7 +8,7 @@ Please checkout the project at your home directory from GitHub master branch.
 
 
 By default two exemplary account confirguations are generated. One of them is for
-the germany credit bank DKB account. The other account is for the bank IngDiBa. 
+the germany credit bank DKB account and the other is for the bank Ing. 
 Both accounts can be modified or deleted at any time.
 
 ### Requirements
@@ -25,7 +25,7 @@ you need to install the **gem cairo**.
 
 
 ###### Important Note:
-It has been tested on OpenBSD with ruby 2.5, 2.6. On Ubuntu, Debain with ruby 2.5.
+It has been tested on OpenBSD with ruby 2.5, 2.6. On Ubuntu, Debain with ruby 2.5, 2.6.
 
 # Getting Started
 Call the script directly from the checked out project-directory with:
