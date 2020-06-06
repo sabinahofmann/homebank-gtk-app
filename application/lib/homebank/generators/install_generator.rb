@@ -2,12 +2,12 @@ module Homebank
   module Generators
     class InstallGenerator
 
-      ACCOUNT_INGDIBA = {
-          id: '1', bank_name: 'INGDiBa', notes: 'an example for INGDiBa', start_line: 16, date: 1,
-          payment: 0, tag: 3,  payee: 5, memo: 5, amount: 8, category: 4, filename: ''
+      ACCOUNT_DE_ING = {
+          id: '1', bank_name: 'ING', notes: 'an example for ING bank csv account', start_line: 16, date: 1,
+          payment: 0, tag: 3,  payee: 3, memo: 5, amount: 8, category: 4, filename: ''
       }
-      ACCOUNT_DKB = {
-          id: '2', bank_name: 'DKB', notes: 'an example for DKB', start_line: 8, date: 1,
+      ACCOUNT_DE_DKB = {
+          id: '2', bank_name: 'DKB', notes: 'an example for DKB account csv export', start_line: 8, date: 1,
           payment: 0, tag: 4,  payee: 4, memo: 5, amount: 8, category: 3, filename: ''
         }
 
@@ -22,7 +22,7 @@ module Homebank
       private
 
       def create_basic_files
-        [ACCOUNT_DKB, ACCOUNT_INGDIBA].each do |account|
+        [ACCOUNT_DE_DKB, ACCOUNT_DE_ING].each do |account|
           account[:filename] =  "#{@file_path}/#{account[:id]}.json"
           unless File.exists? account[:filename]
             File.open(account[:filename],"w"){ |f| f.write account.to_json }
