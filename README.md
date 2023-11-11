@@ -6,32 +6,34 @@ can be imported by the personal finance software [HomeBank](http://homebank.free
 # Installation
 Please checkout the project at your home directory from GitHub master branch.
 
+By default two exemplary account configurations are generated. One of them is for
+the germany credit bank DKB account and the other one is for the bank Ing. 
 
-By default two exemplary account confirguations are generated. One of them is for
-the germany credit bank DKB account and the other is for the bank Ing. 
-Both accounts can be modified or deleted at any time.
+Both accounts can be modified or deleted at any time. Feel free.
 
 ### Requirements
 This code is written in ruby and gtk3.
 
-Please make sure to have ruby **>= 2.5** and the **gem gkt3** installed on your system.
+Please make sure to have ruby **>= 3.0** and the **gem gkt3** installed on your system.
+
+- gem install gtk3
+- gem install gobject-introspection
 
 Note: If you have any problems with 'gobject-introspection', please make sure to 
-install the **lib 'glade'** on your system before the gem gtk3.
+install the **lib 'glade'** on your operating system before the gem gtk3.
 
 ###### with ruby 2.6
 If the call `./homebank-gtk` contains the error `Cannot load specified object - /usr/local/lib/ruby/gems/2.6/gems/cairo-1.16.4/lib/cairo.so`,
-you need to install the **gem cairo**. 
-
+you need to install the **gem cairo**.
 
 ###### Important Note:
-It has been tested on OpenBSD with ruby 2.5, 2.6. On Ubuntu, Debain with ruby 2.5, 2.6.
+It has been tested on mac M1 with ruby version 3.2.2 .
 
 # Getting Started
 Call the script directly from the checked out project-directory with:
 
 ```
-    $ ./homebank-gtk
+  $ ./homebank-gtk
 ```
 
 A main window appears with a menu and two generated examples of confirguation accounts.
@@ -39,14 +41,14 @@ A main window appears with a menu and two generated examples of confirguation ac
 ![Main window](/docu/main_window.png)
 
 For the desired report of your bank of choice, you have to create or use an exists 
-confirguation account. Please push the button "Add account", "Edit Account" or "Import CSV".
+configuration account. Please push the button "Add account", "Edit Account" or "Import CSV".
 
 ![New account](/docu/add_account.png)
 
 In edit mode of an configuration account enter the linenumber in the field "Start line at". It stands
 for the start of the entries of your transactions in the exported CSV-file.
 The fields "Date", "Payment", "Tag", "Payee", "Memo", "Amount", "Category" are use
-to determine the columns in the exportert CVS file - more explanations see [HomeBank CSV file format](http://homebank.free.fr/help/misc-csvformat.html)
+to determine the columns in the exported CVS file - more explanations see [HomeBank CSV file format](http://homebank.free.fr/help/misc-csvformat.html)
 
 ![Edit mode](/docu/edit_mode.png)
 
@@ -62,7 +64,6 @@ extension "<account-name>-homebank-import.cvs".
 ![Conert CSV](/docu/convert_csv.png)
 
 ###### Basic HomeBank knowledge is highly recommended
-
 
 ##### Example of DKB CSV report:
 
@@ -87,7 +88,6 @@ The confirguation of this file is:
 1 xx-xx-xxxx;0;"";credit card;xxxx-xxxx xxx xxx;0,01;Gutschrift;credit card
 2 xx-xx-xxxx;0;"";paypal;xxxx-xxxx xxx xxx;-14,40;Lastschrift;paypal
 ```
-
 
 ## Questions or problems?
 

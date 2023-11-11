@@ -45,7 +45,7 @@ module Homebank
     end
 
     def is_new?
-      !File.exists? @filename
+      !File.exist? @filename
     end
 
     # Deletes an item
