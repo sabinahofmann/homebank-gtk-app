@@ -32,7 +32,7 @@ module Homebank
 
       # convert cvs
       convert_button.signal_connect 'clicked' do
-        result = Homebank::CsvConvertor.new({account: account, file: file_chooser_button}).generate
+        result = Homebank::CsvConvertor.new( account: account, file: file_chooser_button ).generate
         result == true ? info_confirmation : error_confirmation
       end
 
@@ -49,16 +49,16 @@ module Homebank
     end
 
     def info_confirmation
-      dialog = confirmation_dialog({message: 'Converting completed', icon: Gtk::Stock::DIALOG_INFO,
-                                    button_type_ok: true})
+      dialog = confirmation_dialog(message: 'Converting completed', icon: Gtk::Stock::DIALOG_INFO,
+                                    button_type_ok: true)
       dialog.signal_connect('response') do |widget, response|
         dialog.destroy && close if response == Gtk::ResponseType::OK
       end
     end
 
     def error_confirmation
-      dialog = confirmation_dialog({message: 'Error converting file',
-                                    icon: Gtk::Stock::DIALOG_ERROR, button_type_ok: true})
+      dialog = confirmation_dialog(message: 'Error converting file',
+                                    icon: Gtk::Stock::DIALOG_ERROR, button_type_ok: true)
       dialog.signal_connect('response') do |widget, response|
         dialog.destroy if response == Gtk::ResponseType::OK
       end

@@ -9,7 +9,7 @@ module Homebank
       @csv_file = options[:file].filename
       @account = options[:account]
       @homebank_csv = homebank_filename
-      @timestamp = @homebank_csv && File.exists?(@homebank_csv) ? File.mtime(@homebank_csv) : Time.now
+      @timestamp = @homebank_csv && File.exist?(@homebank_csv) ? File.mtime(@homebank_csv) : Time.now
     end
 
     def generate
@@ -23,9 +23,9 @@ module Homebank
     def touch_csv
       csv_data = translate_data
       if csv_data.any?
-        File.delete(@homebank_csv) if File.exists?(@homebank_csv)
+        File.delete(@homebank_csv) if File.exist?(@homebank_csv)
 
-        CSV.open(@homebank_csv, "wb", { col_sep: ";" }) do |csv|
+        CSV.open(@homebank_csv, "wb", col_sep: ";") do |csv|
           csv_data.each do |line|
             csv << line
           end
@@ -40,7 +40,7 @@ module Homebank
       data = []
       options = { col_sep: ';', encoding: 'iso-8859-1:utf-8', force_quotes: false }
       if @csv_file
-        CSV.foreach(@csv_file, options).with_index do |row, i|
+        CSV.foreach(@csv_file, **options).with_index do |row, i|
           if i >= @account.start_line_csv && row.any?
             tag = row[@account.tag_csv] || ""
             payee = row[@account.payee_csv] || ""

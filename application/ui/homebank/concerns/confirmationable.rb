@@ -3,11 +3,11 @@ module Homebank
     module Confirmationable
 
       def confirmation_contents
-        dialog = confirmation_dialog({title: 'Online documentation',
+        dialog = confirmation_dialog( title: 'Online documentation',
                                       message: 'Do you want to read the manual online?',
                                       second_message: "You will be redirected to the " \
                                         "documentation website\nwhere the help pages are " \
-                                        "maintained and translated.", icon: 'help-browser'})
+                                        "maintained and translated.", icon: 'help-browser' )
 
         link_button = Gtk::LinkButton.new('https://github.com/sabinahofmann/homebank-gtk-app', 'Read online')
         link_button.use_underline = true
