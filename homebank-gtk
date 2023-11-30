@@ -4,6 +4,7 @@ require 'gtk3'
 require 'fileutils'
 
 # Require all ruby files in the application folder recursively
+# alternative for __dir__ is "."
 application_root_path = File.expand_path(__dir__)
 Dir.glob(File.join(application_root_path, '**', '*.rb'), &method(:require))
 

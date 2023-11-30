@@ -4,7 +4,7 @@ module Homebank
     attr_reader :user_data_path
 
     def initialize
-      super 'de.hofmann.homebank-gtk', Gio::ApplicationFlags::FLAGS_NONE
+      super 'de.hofmann.homebank-gtk', :flags_none #Gio::ApplicationFlags::FLAGS_NONE
 
       @user_data_path = File.expand_path('~/.homebank-gtk')
       unless File.directory?(@user_data_path)
@@ -13,7 +13,7 @@ module Homebank
       end
 
       signal_connect :activate do |application|
-        Homebank::ApplicationWindow.new(application).present
+        ApplicationWindow.new(application)
       end
     end
   end

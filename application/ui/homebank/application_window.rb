@@ -55,7 +55,7 @@ module Homebank
       end
 
       about.signal_connect 'activate' do
-        Homebank::AboutDialog.show(self)
+        AboutDialog.show(self)
       end
 
       new_account.signal_connect 'activate' do
@@ -71,18 +71,17 @@ module Homebank
     end
 
     def add_account
-      account_window = Homebank::AccountWindow.new(application, Homebank::Account.new(user_data_path: application.user_data_path))
-      account_window.present
+      AccountWindow.new(application, Account.new(user_data_path: application.user_data_path))
     end
 
     def load_accounts
       account_list_box.children.each { |child| account_list_box.remove child }
 
       json_files = Dir[File.join(File.expand_path(application.user_data_path), '*.json')]
-      items = json_files.map{ |filename| Homebank::Account.new(filename: filename) }
+      items = json_files.map{ |filename| Account.new(filename: filename) }
 
       items.each do |item|
-        account_list_box.add Homebank::AccountListBoxRow.new(item)
+        account_list_box.add AccountListBoxRow.new(item)
       end
       # push statusbar
       @account_counter = items.size
@@ -93,17 +92,23 @@ module Homebank
       status_bar.push(@context_id, "Accounts: #{@account_counter}")
     end
 
+    # TODO delete + Dialog
     def delete_confirmation
-      dialog = confirmation_dialog({ title: 'Delete confirmation',
-                                     message: 'Do you really want to delete?',
-                                     icon: Gtk::Stock::DIALOG_QUESTION,
-                                     button_type_ok: true, button_type_cancel: true })
+      # GTK::Dialog
+      dialog = confirmation_dialog(title: 'Delete confirmation',
+                                   message: 'Do you really want to delete?',
+                                   icon: Gtk::Stock::HELP,
+                                   button_type_ok: true, button_type_cancel: true)
 
-      dialog.signal_connect('response') do |widget, response|
-        if response == Gtk::ResponseType::OK
-          FileUtils.rm_f Dir.glob("#{application.user_data_path}/*")
-          load_accounts && dialog.destroy
+      dialog.signal_connect('response') do |response|
+        FileUtils.rm_f Dir.glob("#{application.user_data_path}/*")
+        json_files = Dir[File.join(File.expand_path(application.user_data_path), '*.json')]
+        items = json_files.map{ |filename| Account.new(filename: filename) }
+        items.each do |item|
+          item.delete!
         end
+        load_accounts
+        dialog.close
       end
     end
   end

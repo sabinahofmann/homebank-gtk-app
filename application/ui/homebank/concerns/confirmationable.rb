@@ -24,7 +24,8 @@ module Homebank
       end
 
       def confirmation_dialog(**args)
-        dialog = Gtk::Dialog.new(title: args[:title] || 'Confirmation', parent: self, flags: :modal)
+        # ':title => nil, :parent => nil, :flags => 0, :buttons => nil'
+        dialog = Gtk::Dialgitog.new(title: args[:title] || 'Confirmation', parent: self, flags: :modal)
         dialog.set_default_size(200,100)
         dialog.icon_name = args[:icon]
 
