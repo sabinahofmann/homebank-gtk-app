@@ -74,7 +74,7 @@ module Homebank
       end
 
       def locate_application_window
-        application_window = application.windows.find { |w| w.is_a? Homebank::ApplicationWindow }
+        application_window = application.windows.find { |w| w.is_a? ApplicationWindow }
         application_window.load_accounts
       end
     end
