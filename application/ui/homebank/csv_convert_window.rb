@@ -22,12 +22,20 @@ module Homebank
       filter = Gtk::FileFilter.new
       filter.name = 'CSV Files'
       filter.add_pattern('*.csv')
-      file_chooser_button.add_filter(filter)
 
       # select file
-      file_chooser_button.current_folder = GLib.home_dir
-      file_chooser_button.signal_connect 'selection_changed'  do |w|
-        file_changed(file_chooser_button)
+      #file_chooser_button.current_folder = GLib.home_dir
+      # file_chooser_button.signal_connect 'selection_changed'  do |w|
+      #  file_changed(file_chooser_button)
+      # end
+
+      file_chooser_button.signal_connect 'clicked' do
+        fileDialog = Gtk::FileChooserDialog.new(:title => "Choose CSV File",
+          :parent => self,
+          :actions => :open)
+
+        fileDialog.add_filter(filter)
+        fileDialog.show
       end
 
       # convert cvs

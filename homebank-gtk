@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'gtk3'
+require 'gtk4'
 require 'fileutils'
 
 # Require all ruby files in the application folder recursively

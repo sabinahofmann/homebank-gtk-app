@@ -4,14 +4,15 @@ module Homebank
 
       def confirmation_contents
         dialog = confirmation_dialog( title: 'Online documentation',
-                                      message: 'Do you want to read the manual online?',
-                                      second_message: "You will be redirected to the " \
-                                        "documentation website\nwhere the help pages are " \
-                                        "maintained and translated.", icon: 'help-browser' )
+                                      message: 'Do you want to read the online manual?',
+                                      second_message: "The Link will you redirect to the " \
+                                        "documentation website.\nThe help pages are " \
+                                        "maintained and translated where.", icon: 'help-browser' )
 
         link_button = Gtk::LinkButton.new('https://github.com/sabinahofmann/homebank-gtk-app', 'Read online')
         link_button.use_underline = true
-        link_button.image = Gtk::Image.new(stock: Gtk::Stock::HELP, icon: Gtk::IconSize::DIALOG)
+        #link_button.image = Gtk::Image.new(:icon_name => "gtk-help", :size => :dialog)
+        link_button.allways_show_image
         link_button.set_relief(:normal)
         link_button.valign = :center
 
@@ -25,8 +26,8 @@ module Homebank
 
       def confirmation_dialog(**args)
         # ':title => nil, :parent => nil, :flags => 0, :buttons => nil'
-        dialog = Gtk::Dialgitog.new(title: args[:title] || 'Confirmation', parent: self, flags: :modal)
-        dialog.set_default_size(200,100)
+        dialog = Gtk::Dialog.new(title: args[:title] || 'Confirmation', parent: self, flags: :modal)
+        dialog.set_default_size(250,150)
         dialog.icon_name = args[:icon]
 
         label = Gtk::Label.new.set_markup("<b>#{args[:message]}</b>", use_underline: true)

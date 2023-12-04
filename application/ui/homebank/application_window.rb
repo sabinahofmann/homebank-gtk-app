@@ -11,66 +11,57 @@ module Homebank
         # Set the template from the resources binary
         set_template resource: '/de/hofmann/homebank-gtk/ui/application_window.ui'
 
-        bind_template_child 'add_new_account_button'
+        bind_template_child 'new_account_button'
         bind_template_child 'account_list_box'
-        bind_template_child 'status_bar'
-        bind_template_child 'cancel'
-        bind_template_child 'new_account'
         bind_template_child 'main_box'
-        bind_template_child 'about'
-        bind_template_child 'contents'
-        bind_template_child 'delete_all'
+        bind_template_child 'stack'
+        bind_template_child 'gears'
+        bind_template_child 'file'
+        bind_template_child 'status_label'
       end
     end
 
     def initialize(application)
+      builder = Gtk::Builder.new(resource: '/de/hofmann/homebank-gtk/ui/menu.ui')
+
       super application: application
 
-      #status_bar
+      file.menu_model = builder["file_menu"]
+      gears.menu_model = builder["menu"]
+
       @account_counter = 0
-      @context_id = status_bar.get_context_id("status")
 
-      #scrolled window
-      main_box.remove(account_list_box)
-      scrolled = Gtk::ScrolledWindow.new
-      scrolled.set_policy(:never, :automatic)
-      viewport  = Gtk::Viewport.new(scrolled.hadjustment, scrolled.vadjustment)
-      account_list_box.expand = true
-      viewport.add(account_list_box)
-      scrolled.add(viewport)
-      main_box.add(scrolled)
-
-      # delete
-      delete_all.signal_connect 'activate' do
-        delete_confirmation
-      end
-
-      # menu bar
-      cancel.signal_connect 'activate' do
-        close
-      end
-
-      contents.signal_connect 'activate' do
-        confirmation_contents
-      end
-
-      about.signal_connect 'activate' do
-        AboutDialog.show(self)
-      end
-
-      new_account.signal_connect 'activate' do
-        add_account
+      %w[help about quit new_account delete_all].each do |action_name|
+        action = Gio::SimpleAction.new(action_name)
+        action.signal_connect("activate") do |_action, _parameter|
+          __send__("#{action_name}_activated")
+        end
+        application.add_action(action)
       end
 
       # add new account
-      add_new_account_button.signal_connect 'clicked' do |button|
-        add_account
+      new_account_button.signal_connect 'clicked' do |button|
+        add_account(application)
       end
-      # loads exists accounts and show all widgets
-      load_accounts && show_all
+
+      load_accounts
+      show
     end
 
-    def add_account
+    def new_account_activated
+      #add_account(self.super)
+    end
+
+    def about_activated
+    end
+    def help_activated
+    end
+
+    def quit_activated
+      quit
+    end
+
+    def add_account(application)
       AccountWindow.new(application, Account.new(user_data_path: application.user_data_path))
     end
 
@@ -81,15 +72,15 @@ module Homebank
       items = json_files.map{ |filename| Account.new(filename: filename) }
 
       items.each do |item|
-        account_list_box.add AccountListBoxRow.new(item)
+        account_list_box.append AccountListBoxRow.new(item)
       end
       # push statusbar
       @account_counter = items.size
-      push_status_bar
+      update_status
     end
 
-    def push_status_bar
-      status_bar.push(@context_id, "Accounts: #{@account_counter}")
+    def update_status
+      status_label.text = "Accounts: #{@account_counter}"
     end
 
     # TODO delete + Dialog

@@ -45,14 +45,7 @@ module Homebank
 
       # cancel
       cancel_button.signal_connect 'clicked' do |button|
-        close
-      end
-
-      # delete
-      delete_button.signal_connect 'clicked' do
-        item.delete!
-        close
-        locate_application_window
+        locate_application_window(application) && destroy
       end
 
       # save
@@ -68,15 +61,24 @@ module Homebank
         item.category = category_entry.value_as_int
         item.notes = notes_text_view.buffer.text
         item.save!
-        close
         # Locate the application window
-        locate_application_window
+        locate_application_window(application)
+        close
       end
 
-      def locate_application_window
-        application_window = application.windows.find { |w| w.is_a? ApplicationWindow }
-        application_window.load_accounts
+      delete_button.signal_connect 'clicked' do
+        item.delete!
+        locate_application_window(application)
+        close
       end
+
+      show
+    end
+
+    def locate_application_window(application)
+      application_window = application.windows.find { |w| w.is_a? ApplicationWindow }
+      application_window.load_accounts
+      application_window.present
     end
   end
 end
