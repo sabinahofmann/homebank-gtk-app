@@ -22,12 +22,7 @@
                 <property name="margin-bottom">10</property>
                 <child>
                   <object class="GtkButton" id="file_chooser_button">
-                    <property name="label">Choose cvs file</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="select_file_label">
-                    <property name="label" translatable="yes">Select CSV file</property>
+                    <property name="label">Select CSV file</property>
                   </object>
                 </child>
               </object>

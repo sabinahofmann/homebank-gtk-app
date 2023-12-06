@@ -4,8 +4,10 @@ require_relative 'concerns/confirmationable'
 module Homebank
   class CsvConvertWindow < Gtk::Window
     include Concerns::Confirmationable
-    type_register
 
+    attr_reader :csv_file_path
+
+    type_register
     class << self
       def init
         set_template resource: '/de/hofmann/homebank-gtk/ui/csv_convert_window.ui'
@@ -22,25 +24,32 @@ module Homebank
       filter = Gtk::FileFilter.new
       filter.name = 'CSV Files'
       filter.add_pattern('*.csv')
+      filter.add_suffix('csv')
 
-      # select file
-      #file_chooser_button.current_folder = GLib.home_dir
-      # file_chooser_button.signal_connect 'selection_changed'  do |w|
-      #  file_changed(file_chooser_button)
-      # end
 
       file_chooser_button.signal_connect 'clicked' do
         fileDialog = Gtk::FileChooserDialog.new(:title => "Choose CSV File",
           :parent => self,
-          :actions => :open)
+          :actions => :open,
+          :buttons =>  [["_Cancel", :cancel], ["_Accept", :accept]])
 
         fileDialog.add_filter(filter)
+        fileDialog.select_multiple = false
+
+        fileDialog.signal_connect("response") do |_widget, response|
+          if response == Gtk::ResponseType::ACCEPT
+            #puts info.file.parse_name
+            @csv_file_path = fileDialog.file.path
+          end
+            fileDialog.destroy
+        end
+
         fileDialog.show
       end
 
       # convert cvs
       convert_button.signal_connect 'clicked' do
-        result = Homebank::CsvConvertor.new( account: account, file: file_chooser_button ).generate
+        result = Homebank::CsvConvertor.new( account: account, file: @csv_file_path ).generate
         result == true ? info_confirmation : error_confirmation
       end
 
@@ -48,12 +57,6 @@ module Homebank
       cancel_button.signal_connect 'clicked' do |button|
         close
       end
-    end
-
-    # file method
-    def file_changed(choo_file)
-      file = choo_file.filename
-      file = "" if file == nil
     end
 
     def info_confirmation

@@ -6,7 +6,7 @@ module Homebank
     attr_reader :homebank_csv, :csv_file, :account, :timestamp
 
     def initialize(**options)
-      @csv_file = options[:file].filename
+      @csv_file = options[:file]
       @account = options[:account]
       @homebank_csv = homebank_filename
       @timestamp = @homebank_csv && File.exist?(@homebank_csv) ? File.mtime(@homebank_csv) : Time.now

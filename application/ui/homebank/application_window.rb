@@ -58,7 +58,7 @@ module Homebank
     end
 
     def quit_activated
-      quit
+      destroy
     end
 
     def add_account(application)
