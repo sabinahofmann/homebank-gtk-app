@@ -4,8 +4,10 @@
   <template class="HomebankAccountListBoxRow" parent="GtkListBoxRow">
     <child>
       <object class="GtkBox" id="main_box">
-        <property name="margin-top">5</property>
-        <property name="margin-bottom">5</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="margin-start">20</property>
+        <property name="margin-end">20</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkBox" id="account_top_box">
@@ -24,6 +26,8 @@
                     <property name="tooltip-text">Edit account</property>
                     <property name="label" translatable="yes">Edit account</property>
                     <property name="icon-name">document-revert</property>
+                    <property name="margin-start">3</property>
+                    <property name="margin-end">3</property>
                   </object>
                 </child>
                 <child>
@@ -31,6 +35,8 @@
                     <property name="tooltip-text">Import CSV</property>
                     <property name="label" translatable="yes">Import CSV</property>
                     <property name="icon-name">system-run</property>
+                    <property name="margin-start">3</property>
+                    <property name="margin-end">3</property>
                   </object>
                 </child>
                 <child>
@@ -38,6 +44,8 @@
                     <property name="tooltip-text">Delete account</property>
                     <property name="label" translatable="yes">Delete account</property>
                     <property name="icon-name">edit-delete</property>
+                    <property name="margin-start">3</property>
+                    <property name="margin-end">3</property>
                   </object>
                 </child>
               </object>

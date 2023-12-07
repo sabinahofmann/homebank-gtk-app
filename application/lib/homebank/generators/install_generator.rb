@@ -23,7 +23,7 @@ module Homebank
 
       def create_basic_files
         [ACCOUNT_DE_DKB, ACCOUNT_DE_ING].each do |account|
-          account[:filename] =  "#{@file_path}/#{account[:id]}.json"
+          account[:filename] =  "#{@file_path}/#{account[:bank_name]}_#{account[:id]}.json"
           unless File.exist? account[:filename]
             File.open(account[:filename],"w"){ |f| f.write account.to_json }
           end

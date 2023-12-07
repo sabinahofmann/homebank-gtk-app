@@ -13,13 +13,13 @@
             <property name="stack">stack</property>
           </object>
         </child>
-        <child type="end">
+        <child type="start">
           <object class="GtkMenuButton" id="gears">
             <property name="icon-name">help-browser</property>
             <property name="direction">down</property>
           </object>
         </child>
-        <child type="start">
+        <child type="end">
           <object class="GtkMenuButton" id="file">
             <property name="direction">none</property>
           </object>
@@ -40,6 +40,7 @@
         <child>
           <object class="GtkBox" id="main_tool_bar">
             <property name="orientation">vertical</property>
+            <property name="halign">start</property>
             <style>
               <class name="toolbar"/>
             </style>
@@ -48,8 +49,8 @@
                 <property name="tooltip-text">Add account</property>
                 <property name="label" translatable="yes">Add account</property>
                 <property name="icon-name">list-add-symbolic</property>
-                <property name="margin-start">10</property>
-                <property name="margin-end">200</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">40</property>
               </object>
             </child>
           </object>
@@ -63,7 +64,6 @@
           <object class="GtkLabel" id="status_label">
             <property name="label">Accounts: 0</property>
             <property name="use-underline">1</property>
-            <property name="xalign">1</property>
           </object>
         </child>
       </object>
