@@ -84,8 +84,7 @@ module Homebank
     end
 
     def delete_all_activated
-      dialog = basic_dialog(title: 'Delete confirmation',
-                                   message: 'Do you really want to delete?')
+      dialog = basic_dialog(title: 'Delete confirmation', message: 'Do you really want to delete?')
 
       accept_button = dialog.child.last_child.get_child_at(0, 0)
       accept_button.label = 'Yes'

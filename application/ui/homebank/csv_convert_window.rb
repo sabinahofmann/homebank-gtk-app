@@ -22,25 +22,27 @@ module Homebank
       super application: application
 
       file_chooser_button.signal_connect 'clicked' do
-        file_dialog = Gtk::FileChooserDialog.new(title: 'Choose CSV file', parent: self, actions: :open, buttons: [["_Cancel", :cancel], ["_Accept", :accept]])
+        file_dialog = Gtk::FileDialog.new
+        file_dialog.title = 'Choose CSV file'
+        file_dialog.accept_label = 'Open'
+        filters = Gtk::FilterListModel.new
+        filters.filter = file_filter
+        file_dialog.filters = filters
 
-        file_dialog.add_filter(file_filter)
-        file_dialog.select_multiple = false
-
-        file_dialog.signal_connect 'response' do |_widget, response|
-          if response == Gtk::ResponseType::ACCEPT
-            @csv_file_path = file_dialog.file.path
-          end
-          file_dialog.destroy
+        file_dialog.open do |dialog, gioTask|
+          # return Gio::File
+          selected_file = dialog.open_finish(gioTask)
+          @csv_file_path = selected_file.path
         end
 
-        file_dialog.show
       end
 
       # convert cvs
       convert_button.signal_connect 'clicked' do
-        result = Homebank::CsvConvertor.new( account: account, file: @csv_file_path ).generate
-        result ? info_confirmation : error_confirmation
+        if @csv_file_path
+          result = Homebank::CsvConvertor.new( account: account, file: @csv_file_path ).generate
+          result ? info_confirmation : error_confirmation
+        end
       end
 
       # cancel
@@ -50,19 +52,13 @@ module Homebank
     end
 
     def info_confirmation
-      dialog = confirmation_dialog(message: 'Converting completed', icon: Gtk::Image.new(:icon_name => "help-about"),
-                                    button_type_ok: true)
-      dialog.signal_connect('response') do |widget, response|
-        dialog.destroy if response == Gtk::ResponseType::OK
-      end
+      dialog = basic_dialog(title: 'Success', message: 'Converting completed')
+      dialog.show
     end
 
     def error_confirmation
-      dialog = confirmation_dialog(message: 'Error converting file',
-                                    icon: Gtk::Image.new(:icon_name => "help-about"), button_type_ok: true)
-      dialog.signal_connect('response') do |widget, response|
-        dialog.destroy if response == Gtk::ResponseType::OK
-      end
+      dialog = basic_dialog(title: 'Error', message: 'Error converting file')
+      dialog.show
     end
 
     private

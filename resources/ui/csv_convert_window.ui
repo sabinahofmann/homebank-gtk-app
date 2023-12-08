@@ -13,34 +13,50 @@
         <property name="spacing">1</property>
         <child>
           <object class="GtkGrid">
+            <property name="margin-top">10</property>
+            <property name="margin-bottom">10</property>
             <property name="row-spacing">10</property>
-            <property name="column-spacing">10</property>
-            <property name="baseline-row">10</property>
-            <child>
-              <object class="GtkGrid">
-                <property name="margin-top">10</property>
-                <property name="margin-bottom">10</property>
-                <child>
-                  <object class="GtkButton" id="file_chooser_button">
-                    <property name="label">Select CSV file</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkBox">
-            <child>
-              <object class="GtkButton" id="cancel_button">
-                <property name="label" translatable="yes">Cancel</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton" id="convert_button">
-                <property name="label" translatable="yes">Convert</property>
-              </object>
-            </child>
+            <property name="column-spacing">5</property>
+            <property name="halign">center</property>
+            <property name="valign">end</property>
+              <child>
+                <object class="GtkLabel" id="file_choose_label">
+                  <property name="hexpand">True</property>
+                  <property name="label" translatable="yes">Select CSV file</property>
+                  <layout>
+                    <property name="column">0</property>
+                    <property name="row">0</property>
+                  </layout>
+                </object>
+              </child>
+              <child>
+                <object class="GtkButton" id="file_chooser_button">
+                  <property name="tooltip-text">Select CSV file</property>
+                  <property name="icon-name">system-run</property>
+                  <layout>
+                    <property name="column">1</property>
+                    <property name="row">0</property>
+                  </layout>
+                </object>
+              </child>
+              <child>
+                <object class="GtkButton" id="convert_button">
+                  <property name="label" translatable="yes">Convert</property>
+                  <layout>
+                    <property name="column">0</property>
+                    <property name="row">1</property>
+                  </layout>
+                </object>
+              </child>
+              <child>
+                <object class="GtkButton" id="cancel_button">
+                  <property name="label" translatable="yes">Cancel</property>
+                  <layout>
+                    <property name="column">1</property>
+                    <property name="row">1</property>
+                  </layout>
+                </object>
+              </child>
           </object>
         </child>
       </object>
