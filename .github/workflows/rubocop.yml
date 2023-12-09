@@ -1,0 +1,14 @@
+name: Rubocop
+run-name: ${{ github.actor }} check code style
+on: [push]
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rubocop Linter Action
+        uses: andrewmcodes/rubocop-linter-action@v3.3.0
+        with:
+          exit_on_failure: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
