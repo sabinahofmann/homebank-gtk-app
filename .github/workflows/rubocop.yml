@@ -1,19 +1,16 @@
-name: Rubocop
-run-name: ${{ github.actor }} check code style
+name: Linting
 on: [push]
 jobs:
-  check-bats-version:
+  test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version: [ '2.6' ]
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+      - uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
         with:
-          ruby-version: ${{ matrix.ruby-version }}
-      - name: Run gem install
+          ruby-version: '2.6'
+      - name: Install rubocop
         run: gem install rubocop -v 1.50.2
-      - name: Check Rubocop Styles
+      - name: Get content of dic
+        run: ls -l
+      - name: Rubocop
         run: rubocop
