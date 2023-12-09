@@ -15,7 +15,7 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
       - name: Run gem install
         working-directory: ${{ github.workspace }}
-        run: gem install rubocop
+        run: gem install rubocop -v 1.50.2
       - name: Check Rubocop Styles
         working-directory: ${{ github.workspace }}
         run: rubocop
