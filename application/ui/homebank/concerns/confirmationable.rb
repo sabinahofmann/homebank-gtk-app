@@ -34,8 +34,15 @@ module Homebank
           grid.attach(second_label, 0, 1, 1, 1)
         end
 
-        button = builder["cancel"]
-        button.signal_connect("clicked") { dialog.destroy }
+        cancel_button = builder["cancel"]
+        cancel_button.signal_connect 'clicked' do
+          dialog.destroy
+        end
+
+        if args[:ok_button]
+          builder["grid"].remove(builder["accept"])
+          cancel_button.label = 'Okay'
+        end
 
         dialog
       end

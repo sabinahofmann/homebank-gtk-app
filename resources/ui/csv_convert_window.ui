@@ -4,6 +4,7 @@
   <template class="HomebankCsvConvertWindow" parent="GtkWindow">
     <property name="title">CSV Convert Mode</property>
     <property name="default-width">350</property>
+    <property name="modal">True</property>
     <property name="icon-name">applications-system</property>
     <child>
       <object class="GtkBox">

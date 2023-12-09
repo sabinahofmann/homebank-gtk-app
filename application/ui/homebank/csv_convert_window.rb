@@ -5,7 +5,7 @@ module Homebank
   class CsvConvertWindow < Gtk::Window
     include Concerns::Confirmationable
 
-    attr_reader :csv_file_path
+    attr_reader :file_path
 
     type_register
     class << self
@@ -24,23 +24,26 @@ module Homebank
       file_chooser_button.signal_connect 'clicked' do
         file_dialog = Gtk::FileDialog.new
         file_dialog.title = 'Choose CSV file'
-        file_dialog.accept_label = 'Open'
+        file_dialog.accept_label = 'Select'
+        file_dialog.modal = true
         filters = Gtk::FilterListModel.new
         filters.filter = file_filter
+        file_dialog.default_filter = file_filter
         file_dialog.filters = filters
 
         file_dialog.open do |dialog, gioTask|
           # return Gio::File
           selected_file = dialog.open_finish(gioTask)
-          @csv_file_path = selected_file.path
+          @file_path = selected_file.path
+          file_chooser_button.label = File.basename(@file_path)
         end
 
       end
 
       # convert cvs
       convert_button.signal_connect 'clicked' do
-        if @csv_file_path
-          result = Homebank::CsvConvertor.new( account: account, file: @csv_file_path ).generate
+        if @file_path
+          result = Homebank::CsvConvertor.new( account: account, file: @file_path ).generate
           result ? info_confirmation : error_confirmation
         end
       end
@@ -52,13 +55,15 @@ module Homebank
     end
 
     def info_confirmation
-      dialog = basic_dialog(title: 'Success', message: 'Converting completed')
+      dialog = basic_dialog(title: 'Success', message: 'Converting completed', ok_button: true)
       dialog.show
+      close
     end
 
     def error_confirmation
-      dialog = basic_dialog(title: 'Error', message: 'Error converting file')
+      dialog = basic_dialog(title: 'Error', message: 'Error converting file', ok_button: true)
       dialog.show
+      close
     end
 
     private

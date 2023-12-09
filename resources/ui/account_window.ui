@@ -4,6 +4,7 @@
   <template class="HomebankAccountWindow" parent="GtkWindow">
     <property name="default-width">300</property>
     <property name="default-height">500</property>
+    <property name="modal">True</property>
     <object class="GtkAdjustment" id="category_int">
       <property name="lower">1</property>
       <property name="upper">100</property>
