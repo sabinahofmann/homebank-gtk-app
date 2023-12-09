@@ -10,7 +10,5 @@ jobs:
           ruby-version: '2.6'
       - name: Install rubocop
         run: gem install rubocop -v 1.50.2
-      - name: Get content of dic
-        run: ls -l
       - name: Rubocop
         run: rubocop
