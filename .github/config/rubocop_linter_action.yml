@@ -57,10 +57,10 @@ bundle: false
 # or not equal to 'modified', RuboCop is run against the entire codebase. Note that this will not work on the master branch.
 # Valid options: 'modified'
 # Default: nil
-check_scope: "modified"
+#check_scope: "modified"
 
 # The base branch against which changes will be compared, if check_scope config is set to 'modified'.
 # This setting is not used if check_scope != 'modified'.
 # Valid options: 'origin/another_branch'
 # Default: 'origin/master'
-base_branch: "origin/master"
+#base_branch: "origin/master"
