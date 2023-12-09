@@ -4,8 +4,15 @@ on: [push]
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: [ '2.6' ]
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
       - name: Rubocop Linter Action
         uses: andrewmcodes/rubocop-linter-action@v3.3.0
         env:
