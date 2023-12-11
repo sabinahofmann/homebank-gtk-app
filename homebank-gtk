@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'gtk4'
 require 'fileutils'
@@ -13,9 +14,9 @@ resource_xml = File.join(application_root_path, 'resources', 'gresources.xml')
 resource_bin = File.join(application_root_path, 'gresource.bin')
 
 # Build the binary
-system("glib-compile-resources",
-       "--target", resource_bin,
-       "--sourcedir", File.dirname(resource_xml),
+system('glib-compile-resources',
+       '--target', resource_bin,
+       '--sourcedir', File.dirname(resource_xml),
        resource_xml)
 
 resource = Gio::Resource.load(resource_bin)
@@ -27,4 +28,3 @@ end
 
 app = Homebank::Application.new
 app.run
-

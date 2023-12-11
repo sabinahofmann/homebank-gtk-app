@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require_relative 'concerns/confirmationable'
 
 module Homebank
+  # Main Window
   class ApplicationWindow < Gtk::Window
     include Concerns::Confirmationable
     # Register the class in the GLib world
@@ -22,23 +25,10 @@ module Homebank
     end
 
     def initialize(application)
-      builder = Gtk::Builder.new(resource: '/de/hofmann/homebank-gtk/ui/menu.ui')
+      super(application:)
 
-      super application: application
-
-      file.menu_model = builder["file_menu"]
-      gears.menu_model = builder["menu"]
-
-      @account_counter = 0
-
-      %w[help about quit new_account delete_all].each do |action_name|
-        action = Gio::SimpleAction.new(action_name)
-        action.signal_connect("activate") do |_action, _parameter|
-          __send__("#{action_name}_activated")
-        end
-        application.add_action(action)
-      end
-
+      init_window
+      init_menu_events(application)
       # add new account
       new_account_button.signal_connect('clicked') { add_account }
 
@@ -53,6 +43,7 @@ module Homebank
     def about_activated
       AboutDialog.show(self)
     end
+
     def help_activated
       helb_dialog
     end
@@ -62,14 +53,13 @@ module Homebank
     end
 
     def add_account
-      AccountWindow.new(self.application, Account.new(user_data_path: application.user_data_path))
+      AccountWindow.new(application, Account.new(user_data_path: application.user_data_path))
     end
 
     def load_accounts
       account_list_box.children.each { |child| account_list_box.remove child }
 
-      json_files = Dir[File.join(File.expand_path(application.user_data_path), '*.json')]
-      items = json_files.map{ |filename| Account.new(filename: filename) }
+      items = account_json_files.map { |filename| Account.new(filename:) }
 
       items.each do |item|
         account_list_box.append AccountListBoxRow.new(item)
@@ -85,7 +75,6 @@ module Homebank
 
     def delete_all_activated
       dialog = basic_dialog(title: 'Delete confirmation', message: 'Do you really want to delete?')
-
       accept_button = dialog.child.last_child.get_child_at(0, 0)
       accept_button.label = 'Yes'
       accept_button.signal_connect 'clicked' do
@@ -97,14 +86,33 @@ module Homebank
 
     private
 
+    def account_json_files
+      Dir[File.join(File.expand_path(application.user_data_path), '*.json')]
+    end
+
+    def init_menu_events(application)
+      %w[help about quit new_account delete_all].each do |action_name|
+        action = Gio::SimpleAction.new(action_name)
+        action.signal_connect('activate') do |_action, _parameter|
+          __send__("#{action_name}_activated")
+        end
+        application.add_action(action)
+      end
+    end
+
+    def init_window
+      @account_counter = 0
+
+      builder = Gtk::Builder.new(resource: '/de/hofmann/homebank-gtk/ui/menu.ui')
+      file.menu_model = builder['file_menu']
+      gears.menu_model = builder['menu']
+    end
+
     def delete_accounts
       FileUtils.rm_f Dir.glob("#{application.user_data_path}/*")
       json_files = Dir[File.join(File.expand_path(application.user_data_path), '*.json')]
-      items = json_files.map { |filename| Account.new(filename: filename) }
-      items.each do |item|
-        item.delete!
-      end
+      items = json_files.map { |filename| Account.new(filename:) }
+      items.each(&:delete!)
     end
   end
 end
-
