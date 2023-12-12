@@ -2,7 +2,7 @@
 
 module Homebank
   module Generators
-    # Generate default configuration file of two german checking accounts
+    # Generate default configuration file of two checking accounts
     class InstallGenerator
       attr_reader :account_de_ing, :account_de_dkb
 

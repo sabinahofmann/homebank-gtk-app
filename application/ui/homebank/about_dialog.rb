@@ -9,7 +9,7 @@ module Homebank
                             copyright: '(C) 2023 Sabina Hofmann', license: 'MIT',
                             website_label: 'homebank-gtk-app',
                             website: 'https://github.com/sabinahofmann/homebank-gtk-app',
-                            comments: 'Convert monthly account statements into readable format for homebank csv import',
+                            comments: 'Convert monthly statement into readable format for homebank csv import',
                             authors: %w[Sabina Hofmann],
                             logo: GdkPixbuf::Pixbuf.new(file: 'csv_convertor_image.png'),
                             title: 'About CSV Convertor for Homebank',
