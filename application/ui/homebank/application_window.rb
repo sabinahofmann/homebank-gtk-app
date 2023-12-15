@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require_relative 'concerns/confirmationable'
 
 module Homebank
+  # Main Window
   class ApplicationWindow < Gtk::Window
     include Concerns::Confirmationable
     # Register the class in the GLib world
@@ -11,101 +14,105 @@ module Homebank
         # Set the template from the resources binary
         set_template resource: '/de/hofmann/homebank-gtk/ui/application_window.ui'
 
-        bind_template_child 'add_new_account_button'
+        bind_template_child 'new_account_button'
         bind_template_child 'account_list_box'
-        bind_template_child 'status_bar'
-        bind_template_child 'cancel'
-        bind_template_child 'new_account'
         bind_template_child 'main_box'
-        bind_template_child 'about'
-        bind_template_child 'contents'
-        bind_template_child 'delete_all'
+        bind_template_child 'stack'
+        bind_template_child 'gears'
+        bind_template_child 'file'
+        bind_template_child 'status_label'
       end
     end
 
     def initialize(application)
-      super application: application
+      super(application:)
 
-      #status_bar
-      @account_counter = 0
-      @context_id = status_bar.get_context_id("status")
-
-      #scrolled window
-      main_box.remove(account_list_box)
-      scrolled = Gtk::ScrolledWindow.new
-      scrolled.set_policy(:never, :automatic)
-      viewport  = Gtk::Viewport.new(scrolled.hadjustment, scrolled.vadjustment)
-      account_list_box.expand = true
-      viewport.add(account_list_box)
-      scrolled.add(viewport)
-      main_box.add(scrolled)
-
-      # delete
-      delete_all.signal_connect 'activate' do
-        delete_confirmation
-      end
-
-      # menu bar
-      cancel.signal_connect 'activate' do
-        close
-      end
-
-      contents.signal_connect 'activate' do
-        confirmation_contents
-      end
-
-      about.signal_connect 'activate' do
-        Homebank::AboutDialog.show(self)
-      end
-
-      new_account.signal_connect 'activate' do
-        add_account
-      end
-
+      init_window
+      init_menu_events(application)
       # add new account
-      add_new_account_button.signal_connect 'clicked' do |button|
-        add_account
-      end
-      # loads exists accounts and show all widgets
-      load_accounts && show_all
+      new_account_button.signal_connect('clicked') { add_account }
+
+      load_accounts
+      show
+    end
+
+    def new_account_activated
+      add_account
+    end
+
+    def about_activated
+      AboutDialog.show(self)
+    end
+
+    def help_activated
+      helb_dialog
+    end
+
+    def quit_activated
+      destroy
     end
 
     def add_account
-      account_window = Homebank::AccountWindow.new(application, Homebank::Account.new(user_data_path: application.user_data_path))
-      account_window.present
+      AccountWindow.new(application, Account.new(user_data_path: application.user_data_path))
     end
 
     def load_accounts
       account_list_box.children.each { |child| account_list_box.remove child }
 
-      json_files = Dir[File.join(File.expand_path(application.user_data_path), '*.json')]
-      items = json_files.map{ |filename| Homebank::Account.new(filename: filename) }
+      items = account_json_files.map { |filename| Account.new(filename:) }
 
       items.each do |item|
-        account_list_box.add Homebank::AccountListBoxRow.new(item)
+        account_list_box.append AccountListBoxRow.new(item)
       end
       # push statusbar
       @account_counter = items.size
-      push_status_bar
+      update_status
     end
 
-    def push_status_bar
-      status_bar.push(@context_id, "Accounts: #{@account_counter}")
+    def update_status
+      status_label.text = "Accounts: #{@account_counter}"
     end
 
-    def delete_confirmation
-      dialog = confirmation_dialog({ title: 'Delete confirmation',
-                                     message: 'Do you really want to delete?',
-                                     icon: Gtk::Stock::DIALOG_QUESTION,
-                                     button_type_ok: true, button_type_cancel: true })
-
-      dialog.signal_connect('response') do |widget, response|
-        if response == Gtk::ResponseType::OK
-          FileUtils.rm_f Dir.glob("#{application.user_data_path}/*")
-          load_accounts && dialog.destroy
-        end
+    def delete_all_activated
+      dialog = basic_dialog(title: 'Delete confirmation', message: 'Do you really want to delete?')
+      accept_button = dialog.child.last_child.get_child_at(0, 0)
+      accept_button.label = 'Yes'
+      accept_button.signal_connect 'clicked' do
+        delete_accounts && load_accounts
+        dialog.destroy
       end
+      dialog.show
+    end
+
+    private
+
+    def account_json_files
+      Dir[File.join(File.expand_path(application.user_data_path), '*.json')]
+    end
+
+    def init_menu_events(application)
+      %w[help about quit new_account delete_all].each do |action_name|
+        action = Gio::SimpleAction.new(action_name)
+        action.signal_connect('activate') do |_action, _parameter|
+          __send__("#{action_name}_activated")
+        end
+        application.add_action(action)
+      end
+    end
+
+    def init_window
+      @account_counter = 0
+
+      builder = Gtk::Builder.new(resource: '/de/hofmann/homebank-gtk/ui/menu.ui')
+      file.menu_model = builder['file_menu']
+      gears.menu_model = builder['menu']
+    end
+
+    def delete_accounts
+      FileUtils.rm_f Dir.glob("#{application.user_data_path}/*")
+      json_files = Dir[File.join(File.expand_path(application.user_data_path), '*.json')]
+      items = json_files.map { |filename| Account.new(filename:) }
+      items.each(&:delete!)
     end
   end
 end
-

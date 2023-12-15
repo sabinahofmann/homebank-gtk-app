@@ -1,120 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.4 -->
 <interface>
-  <requires lib="gtk+" version="3.20"/>
-  <object class="GtkImage" id="delete_image">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-delete</property>
-  </object>
-  <object class="GtkImage" id="edit_image">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-edit</property>
-  </object>
-  <object class="GtkImage" id="import_image">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-convert</property>
-  </object>
+  <requires lib="gtk" version="4.0" />
   <template class="HomebankAccountListBoxRow" parent="GtkListBoxRow">
-    <property name="width_request">100</property>
-    <property name="height_request">30</property>
-    <property name="visible">True</property>
-    <property name="can_focus">True</property>
     <child>
       <object class="GtkBox" id="main_box">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_left">5</property>
-        <property name="margin_top">5</property>
-        <property name="margin_bottom">5</property>
-        <property name="border_width">1</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="margin-start">20</property>
+        <property name="margin-end">20</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkBox" id="account_top_box">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_left">5</property>
             <property name="spacing">10</property>
             <child>
               <object class="GtkLabel" id="account_title_label">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Account titel </property>
+                <property name="label" translatable="yes">Account titel</property>
                 <property name="xalign">0</property>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
-              <object class="GtkButtonBox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_right">5</property>
-                <property name="layout_style">start</property>
+              <object class="GtkBox">
                 <child>
                   <object class="GtkButton" id="edit_button">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="tooltip_text" translatable="yes">Edit account</property>
-                    <property name="margin_right">3</property>
-                    <property name="image">edit_image</property>
+                    <property name="tooltip-text">Edit account</property>
+                    <property name="label" translatable="yes">Edit account</property>
+                    <property name="icon-name">document-revert</property>
+                    <property name="margin-start">3</property>
+                    <property name="margin-end">3</property>
                   </object>
-                  <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkButton" id="import_button">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="tooltip_text" translatable="yes">Import CSV</property>
-                    <property name="margin_right">3</property>
-                    <property name="image">import_image</property>
+                    <property name="tooltip-text">Import CSV</property>
+                    <property name="label" translatable="yes">Import CSV</property>
+                    <property name="icon-name">system-run</property>
+                    <property name="margin-start">3</property>
+                    <property name="margin-end">3</property>
                   </object>
-                  <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkButton" id="delete_button">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="tooltip_text" translatable="yes">Delete account</property>
-                    <property name="margin_right">3</property>
-                    <property name="image">delete_image</property>
+                    <property name="tooltip-text">Delete account</property>
+                    <property name="label" translatable="yes">Delete account</property>
+                    <property name="icon-name">edit-delete</property>
+                    <property name="margin-start">3</property>
+                    <property name="margin-end">3</property>
                   </object>
-                  <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
       </object>
     </child>
