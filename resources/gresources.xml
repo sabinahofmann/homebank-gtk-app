@@ -5,5 +5,7 @@
     <file preprocess="xml-stripblanks">ui/account_window.ui</file>
     <file preprocess="xml-stripblanks">ui/account_list_box_row.ui</file>
     <file preprocess="xml-stripblanks">ui/csv_convert_window.ui</file>
+    <file preprocess="xml-stripblanks">ui/menu.ui</file>
+    <file preprocess="xml-stripblanks">ui/dialog_window.ui</file>
   </gresource>
 </gresources>

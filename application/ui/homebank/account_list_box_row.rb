@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Homebank
+  # Component list all account in main window
   class AccountListBoxRow < Gtk::ListBoxRow
     type_register
 
@@ -17,27 +20,31 @@ module Homebank
       super()
 
       account_title_label.text = account.bank_name || ''
+      # button events
+      import_button.signal_connect('clicked') { CsvConvertWindow.new(application, account).present }
 
-      import_button.signal_connect 'clicked' do
-        Homebank::CsvConvertWindow.new(application, account).present
-      end
-
-      edit_button.signal_connect 'clicked' do
-        Homebank::AccountWindow.new(application, account).present
-      end
+      edit_button.signal_connect('clicked') { AccountWindow.new(application, account).present }
 
       delete_button.signal_connect 'clicked' do
-        account.delete!
-        # Locate the application window
-        application_window = application.windows.find { |w| w.is_a? Homebank::ApplicationWindow }
-        application_window.load_accounts
+        delete_button_event(account)
       end
+    end
+
+    private
+
+    def delete_button_event(account)
+      account.delete!
+      application_window.load_accounts
     end
 
     def application
       parent = self.parent
-      parent = parent.parent while !parent.is_a? Gtk::Window
+      parent = parent.parent until parent.is_a? Gtk::Window
       parent.application
+    end
+
+    def application_window
+      application.windows.find { |w| w.is_a? Homebank::ApplicationWindow }
     end
   end
 end

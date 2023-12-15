@@ -1,85 +1,64 @@
+# frozen_string_literal: true
+
 module Homebank
   module Concerns
+    # Create common customizeable dialogs with editable buttons cancel and accept
     module Confirmationable
+      def helb_dialog
+        dialog = basic_dialog(title: 'Online documentation',
+                              message: 'Do you want to read the online manual?',
+                              second_message: 'The Link will you redirect to the documentation website.' \
+                                              'The help pages are maintained and translated where.')
 
-      def confirmation_contents
-        dialog = confirmation_dialog({title: 'Online documentation',
-                                      message: 'Do you want to read the manual online?',
-                                      second_message: "You will be redirected to the " \
-                                        "documentation website\nwhere the help pages are " \
-                                        "maintained and translated.", icon: 'help-browser'})
-
-        link_button = Gtk::LinkButton.new('https://github.com/sabinahofmann/homebank-gtk-app', 'Read online')
-        link_button.use_underline = true
-        link_button.image = Gtk::Image.new(stock: Gtk::Stock::HELP, icon: Gtk::IconSize::DIALOG)
-        link_button.set_relief(:normal)
-        link_button.valign = :center
-
-        dialog.action_area.add(link_button)
-        dialog.action_area.halign = :center
-        dialog.action_area.border_width = 10
-        dialog.show_all
-        dialog.run
-        dialog.destroy
+        remove_buttons(dialog)
+        add_link_button(dialog)
+        dialog.show
       end
 
-      def confirmation_dialog(**args)
-        dialog = Gtk::Dialog.new(title: args[:title] || 'Confirmation', parent: self, flags: :modal)
-        dialog.set_default_size(200,100)
-        dialog.icon_name = args[:icon]
-
-        label = Gtk::Label.new.set_markup("<b>#{args[:message]}</b>", use_underline: true)
-        label.set_padding(10, 10)
-        label.valign = :center
-        label.hexpand = :true
-
-        vbox = Gtk::Box.new(:vertical, 0)
-        dialog.child.add(vbox)
-
-        hbox1 = Gtk::Box.new(:horizontal, 0)
-        hbox1.border_width = 5
-        hbox1.valign = :center
-        vbox.add(hbox1)
-        hbox1.add(label)
+      def basic_dialog(**args)
+        accept_button, cancel_button, dialog, grid = init_dialog(args)
 
         if args[:second_message]
-          hbox2 = Gtk::Box.new(:horizontal, 0)
-          hbox2.set_border_width(5)
-          vbox.add(hbox2)
-
           second_label = Gtk::Label.new.set_markup(args[:second_message], use_underline: true)
-          label.set_padding(10, 10)
-          hbox2.add(second_label)
+          grid.attach(second_label, 0, 1, 1, 1)
         end
 
-        if args[:button_type_ok]
-          ok_button = Gtk::Button.new(label: 'OK')
-          ok_button.image = Gtk::Image.new(stock: Gtk::Stock::OK, icon: Gtk::IconSize::DIALOG)
-          dialog.add_action_widget(ok_button, Gtk::ResponseType::OK)
+        if args[:ok_button]
+          dialog.child.last_child.remove(accept_button)
+          cancel_button.label = 'Okay'
         end
-
-        if args[:button_type_cancel]
-          cancel_button = Gtk::Button.new(label: 'Cancel')
-          cancel_button.image = Gtk::Image.new(stock: Gtk::Stock::CANCEL, icon: Gtk::IconSize::DIALOG)
-          dialog.add_action_widget(cancel_button, Gtk::ResponseType::CANCEL)
-        end
-
-        if args[:button_type_close]
-          close_button = Gtk::Button.new(label: 'Close')
-          close_button.image = Gtk::Image.new(stock: Gtk::Stock::CLOSE, icon: Gtk::IconSize::DIALOG)
-          dialog.add_action_widget(close_button, Gtk::ResponseType::CLOSE)
-        end
-
-        dialog.signal_connect('response') do |widget, response|
-          case response
-          when Gtk::ResponseType::CLOSE
-            dialog.destroy
-          when Gtk::ResponseType::CANCEL
-            dialog.destroy
-          end
-        end
-        dialog.show_all
         dialog
+      end
+
+      private
+
+      def add_link_button(dialog)
+        link_button = Gtk::LinkButton.new('https://github.com/sabinahofmann/homebank-gtk-app', 'Read online')
+        dialog.child.last_child.attach(link_button, 0, 0, 1, 1)
+      end
+
+      def remove_buttons(dialog)
+        grid_with_buttons = dialog.child.last_child
+        cancel_button = grid_with_buttons.get_child_at(1, 0)
+        accept_button = grid_with_buttons.get_child_at(0, 0)
+        grid_with_buttons.remove(accept_button)
+        grid_with_buttons.remove(cancel_button)
+      end
+
+      def init_dialog(args)
+        builder = Gtk::Builder.new(resource: '/de/hofmann/homebank-gtk/ui/dialog_window.ui')
+        dialog = builder['window']
+        label = builder['message_label']
+        grid = builder['message_grid']
+        cancel_button = builder['cancel']
+        accept_button = builder['accept']
+        # set title and main message
+        dialog.title = args[:title] || 'Confirmation'
+        label.label = args[:message]
+        # set default action on cancel button
+        cancel_button.signal_connect('clicked') { dialog.destroy }
+
+        [accept_button, cancel_button, dialog, grid]
       end
     end
   end
