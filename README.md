@@ -12,19 +12,11 @@ the germany credit bank DKB account and the other one is for the bank Ing.
 Both accounts can be modified or deleted at any time. Feel free.
 
 ### Requirements
-This code is written in ruby and gtk3.
+This code is written in ruby and gtk4.
 
-Please make sure to have ruby **>= 3.0** and the **gem gkt3** installed on your system.
+Please make sure to have ruby **>= 3.0** and the **gem gkt4** installed on your system.
 
-- gem install gtk3
-- gem install gobject-introspection
-
-Note: If you have any problems with 'gobject-introspection', please make sure to 
-install the **lib 'glade'** on your operating system before the gem gtk3.
-
-###### with ruby 2.6
-If the call `./homebank-gtk` contains the error `Cannot load specified object - /usr/local/lib/ruby/gems/2.6/gems/cairo-1.16.4/lib/cairo.so`,
-you need to install the **gem cairo**.
+- gem install gtk4
 
 ###### Important Note:
 It has been tested on mac M1 with ruby version 3.2.2 .
