@@ -1,37 +1,57 @@
 # frozen_string_literal: true
 
 require 'csv'
+require 'fileutils'
 
 module Homebank
   # read the selected monthly statement csv file
   # convert it to a readable csv format for the homebank application
   class CsvConvertor
-    attr_reader :converted_csv, :file, :account, :timestamp, :translated_data
+    attr_accessor :csv_filename, :file, :account, :translated_data
 
     CSV_OPTIONS = { col_sep: ';', encoding: 'iso-8859-1:utf-8', force_quotes: false }.freeze
     def initialize(**options)
       @file = options[:file]
       @account = options[:account]
-      @converted_csv = converted_csv_filename
-      @timestamp = @converted_csv && File.exist?(@converted_csv) ? File.mtime(@converted_csv) : Time.now
-      @translated_data = []
+      @csv_filename = new_csv_filename
+      translate_data
     end
 
     def generate
-      return unless @converted_csv
+      return unless @csv_filename
 
       touch_csv
-      File.mtime(@converted_csv) > @timestamp
+      File.mtime(@csv_filename) > timestamp
     end
 
     private
 
+    def timestamp
+      @csv_filename && File.exist?(@csv_filename) ? File.mtime(@csv_filename) : Time.now
+    end
+
+    def translate_data
+      @translated_data = []
+      return unless @file
+
+      CSV.foreach(@file, **CSV_OPTIONS).with_index do |row, i|
+        if i >= @account.start_line_csv && row.any?
+          @translated_data << [date(row), @account.payment, '', payee(row), memo(row), row[@account.amount_csv],
+                               row[@account.category_csv], tag(row)]
+        end
+      end
+    end
+
+    def new_csv_filename
+      "#{File.dirname(@file)}/#{@account.bank_name}-homebank-import.csv" if @file && csv?
+    end
+
     def touch_csv
-      return unless translate_data.any?
+      return unless @translated_data.any?
 
-      File.delete(@converted_csv) if File.exist?(@converted_csv)
+      FileUtils.rm_f(@csv_filename)
 
-      CSV.open(@converted_csv, 'wb', col_sep: ';') do |csv|
+      CSV.open(@csv_filename, 'wb', col_sep: ';') do |csv|
         @translated_data.each do |line|
           csv << line
         end
@@ -39,19 +59,6 @@ module Homebank
         puts e.full_message
         next
       end
-    end
-
-    def translate_data
-      return unless @file
-
-      @translated_data = []
-      CSV.foreach(@file, **CSV_OPTIONS).with_index do |row, i|
-        if i >= @account.start_line_csv && row.any?
-          @translated_data << [date(row), @account.payment, '', payee(row), memo(row), row[@account.amount_csv],
-                               row[@account.category_csv], tag(row)]
-        end
-      end
-      @translated_data
     end
 
     def memo(row)
@@ -72,10 +79,6 @@ module Homebank
     def date(row)
       date = row[@account.date_csv] || Time.now.strftime('%d-%m-%Y')
       date.gsub('.', '-')
-    end
-
-    def converted_csv_filename
-      "#{File.dirname(@file)}/#{@account.bank_name}-homebank-import.csv" if @file && csv?
     end
 
     def csv?

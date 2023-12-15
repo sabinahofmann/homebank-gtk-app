@@ -19,22 +19,22 @@ module Homebank
     def initialize(account)
       super()
 
-      account_label(account)
-
+      account_title_label.text = account.bank_name || ''
+      # button events
       import_button.signal_connect('clicked') { CsvConvertWindow.new(application, account).present }
 
       edit_button.signal_connect('clicked') { AccountWindow.new(application, account).present }
 
       delete_button.signal_connect 'clicked' do
-        account.delete!
-        application_window.load_accounts
+        delete_button_event(account)
       end
     end
 
     private
 
-    def account_label(account)
-      account_title_label.text = account.bank_name || ''
+    def delete_button_event(account)
+      account.delete!
+      application_window.load_accounts
     end
 
     def application

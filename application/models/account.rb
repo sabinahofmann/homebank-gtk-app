@@ -6,20 +6,18 @@ require 'json'
 module Homebank
   # model class for setting individual bank configuration, which is using to convert a readable csv file
   class Account
-    PROPERTIES = %i[id bank_name notes start_line filename creation_datetime date payment
-                    tag payee memo amount category].freeze
+    PROPERTIES = %i[id bank_name notes start_line filename date payment tag payee memo amount category].freeze
 
     attr_accessor(*PROPERTIES)
 
-    %w[date tag memo amount category payee start_line].each do |field|
-      define_method("#{field}_csv") { send(field) - 1 }
-    end
+    # %w[date tag memo amount category payee start_line].each do |field|
+    #  define_method("#{field}_csv") { send(field) - 1 }
+    # end
 
     def initialize(**options)
       if options[:user_data_path]
         # New item. When saved, it will be placed under the :user_data_path value
         @id = SecureRandom.uuid
-        @creation_datetime = Time.now
         @filename = "#{options[:user_data_path]}/#{id}.json"
       elsif options[:filename]
         load_from_file options[:filename] # Load an existing item
@@ -45,7 +43,7 @@ module Homebank
     end
 
     def new?
-      !File.exist? @filename
+      bank_name.nil?
     end
 
     # Deletes an item
