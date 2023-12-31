@@ -67,11 +67,15 @@ module Homebank
       file_dialog_event(file_dialog)
     end
 
+    # throw an error if nothing is selected
     def file_dialog_event(file_dialog)
       file_dialog.open do |dialog, gio_task|
         # return Gio::File object
         @file_path = dialog.open_finish(gio_task).path
         file_chooser_button.label = File.basename(@file_path)
+      rescue StandardError => e
+        puts e.full_message
+        next
       end
     end
 

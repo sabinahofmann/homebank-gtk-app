@@ -5,7 +5,7 @@ module Homebank
   class AboutDialog
     def self.show(parent)
       Gtk::AboutDialog.show(parent,
-                            program_name: 'CSV convertor', version: '1.0',
+                            program_name: 'CSV convertor', version: '1.0.1',
                             copyright: '(C) 2023 Sabina Hofmann', license: 'MIT',
                             website_label: 'homebank-gtk-app',
                             website: 'https://github.com/sabinahofmann/homebank-gtk-app',
