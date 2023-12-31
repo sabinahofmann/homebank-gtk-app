@@ -20,13 +20,12 @@ module Homebank
     def generate
       return unless @csv_filename
 
-      touch_csv
-      File.mtime(@csv_filename) > timestamp
+      touch_csv && check_timestamp
     end
 
     private
 
-    def timestamp
+    def check_timestamp
       @csv_filename && File.exist?(@csv_filename) ? File.mtime(@csv_filename) : Time.now
     end
 

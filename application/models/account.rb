@@ -10,9 +10,9 @@ module Homebank
 
     attr_accessor(*PROPERTIES)
 
-    # %w[date tag memo amount category payee start_line].each do |field|
-    #  define_method("#{field}_csv") { send(field) - 1 }
-    # end
+    %w[date tag memo amount category payee start_line].each do |field|
+      define_method("#{field}_csv") { send(field) - 1 }
+    end
 
     def initialize(**options)
       if options[:user_data_path]
