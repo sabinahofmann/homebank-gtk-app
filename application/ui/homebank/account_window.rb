@@ -45,7 +45,7 @@ module Homebank
 
     private
 
-    def init_account_window
+    def init_account_window(account)
       @account = account
       account_title
       load_account unless @account.new?

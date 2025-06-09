@@ -4,8 +4,8 @@ require 'csv'
 require_relative 'concerns/confirmationable'
 
 module Homebank
-  # Open Window to choose a monthly statement csv file to convert
-  # return a converted readble csv file for homebank import
+  # Open Window to choose a monthly statement csv file to convert.
+  # Return a converted readable csv file for an homebank import.
   class CsvConvertWindow < Gtk::Window
     include Concerns::Confirmationable
 
@@ -41,14 +41,14 @@ module Homebank
     end
 
     def info_confirmation
-      dialog = basic_dialog(title: 'Success', message: 'Converting completed', ok_button: true)
-      dialog.show
+      info_dialog = basic_dialog(title: 'Success', message: 'Converting completed', ok_button: true)
+      info_dialog.show
       close
     end
 
     def error_confirmation
-      dialog = basic_dialog(title: 'Error', message: 'Error converting file', ok_button: true)
-      dialog.show
+      error_dialog = basic_dialog(title: 'Error', message: 'Error converting file', ok_button: true)
+      error_dialog.show
       close
     end
 
@@ -56,13 +56,9 @@ module Homebank
 
     def init_file_dialog
       file_dialog = Gtk::FileDialog.new
-      file_dialog.title = 'Choose CSV file'
       file_dialog.accept_label = 'Select'
       file_dialog.modal = true
       file_dialog.default_filter = file_filter
-      filters = Gtk::FilterListModel.new
-      filters.filter = file_filter
-      file_dialog.filters = filters
 
       file_dialog_event(file_dialog)
     end
@@ -73,9 +69,8 @@ module Homebank
         # return Gio::File object
         @file_path = dialog.open_finish(gio_task).path
         file_chooser_button.label = File.basename(@file_path)
-      rescue StandardError => e
-        puts e.full_message
-        next
+      rescue Gtk::DialogError
+        p 'cancel'
       end
     end
 
