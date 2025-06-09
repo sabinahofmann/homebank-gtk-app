@@ -6,7 +6,7 @@ module Homebank
     attr_reader :user_data_path
 
     def initialize
-      super('de.hofmann.homebank-gtk', :flags_none)
+      super('de.hofmann.homebank-gtk')
 
       @user_data_path = File.expand_path('~/.homebank-gtk')
       unless File.directory?(@user_data_path)

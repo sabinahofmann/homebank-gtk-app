@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Homebank
-  # Component list all account in main window
+  # Component to list all accounts in main window
   class AccountListBoxRow < Gtk::ListBoxRow
     type_register
 

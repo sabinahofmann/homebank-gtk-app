@@ -9,11 +9,12 @@ module Homebank
   class CsvConvertor
     attr_accessor :csv_filename, :file, :account, :translated_data
 
-    CSV_OPTIONS = { col_sep: ';', encoding: 'iso-8859-1:utf-8', force_quotes: false }.freeze
+    CSV_OPTIONS = { col_sep: ';', encoding: 'iso-8859-1:utf-8', force_quotes: false, liberal_parsing: true }.freeze
     def initialize(**options)
       @file = options[:file]
       @account = options[:account]
       @csv_filename = new_csv_filename
+
       translate_data
     end
 

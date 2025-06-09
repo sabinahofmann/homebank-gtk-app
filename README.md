@@ -37,7 +37,7 @@ configuration account. Please push the button "Add account", "Edit Account" or "
 
 ![New account](/docu/add_account.png)
 
-In edit mode of an configuration account enter the linenumber in the field "Start line at". It stands
+In edit mode of an configuration account enter the line number in the field "Start line at". It stands
 for the start of the entries of your transactions in the exported CSV-file.
 The fields "Date", "Payment", "Tag", "Payee", "Memo", "Amount", "Category" are use
 to determine the columns in the exported CVS file - more explanations see [HomeBank CSV file format](http://homebank.free.fr/help/misc-csvformat.html)
