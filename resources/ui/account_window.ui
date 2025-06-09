@@ -381,7 +381,7 @@
               <child>
                 <object class="GtkButton" id="cancel_button">
                   <property name="tooltip-text" translatable="yes">Cancel</property>
-                  <property name="icon-name">process-stop</property>
+                  <property name="icon-name">edit-undo</property>
                   <layout>
                     <property name="column">4</property>
                     <property name="row">0</property>
