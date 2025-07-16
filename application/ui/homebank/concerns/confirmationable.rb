@@ -2,13 +2,13 @@
 
 module Homebank
   module Concerns
-    # Create common customizeable dialogs with editable buttons cancel and accept
+    # Create common customizable dialogs with editable buttons cancel and accept
     module Confirmationable
-      def helb_dialog
+      def help_dialog
         dialog = basic_dialog(title: 'Online documentation',
                               message: 'Do you want to read the online manual?',
-                              second_message: 'The Link will you redirect to the documentation website.' \
-                                              'The help pages are maintained and translated where.')
+                              second_message: 'The link will redirect you to the documentation website.' \
+                                              'The help pages are maintained and translated where available.')
 
         remove_buttons(dialog)
         add_link_button(dialog)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Homebank
-  # Window shot configuration for an account
+  # Window for account configuration
   class AccountWindow < Gtk::Window
     # Register the class in the GLib world
     type_register

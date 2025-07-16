@@ -45,7 +45,7 @@ module Homebank
     end
 
     def help_activated
-      helb_dialog
+      help_dialog
     end
 
     def quit_activated

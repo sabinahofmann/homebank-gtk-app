@@ -29,7 +29,7 @@ module Homebank
         init_file_dialog
       end
 
-      # convert cvs
+      # convert csv
       convert_button.signal_connect 'clicked' do
         if @file_path
           CsvConvertor.new(account:, file: @file_path).generate ? info_confirmation : error_confirmation

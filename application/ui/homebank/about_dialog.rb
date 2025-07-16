@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Homebank
-  # About Dialig with content
+  # About Dialog with content
   class AboutDialog
     def self.show(parent)
       Gtk::AboutDialog.show(parent,
