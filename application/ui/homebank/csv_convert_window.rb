@@ -69,8 +69,8 @@ module Homebank
         # return Gio::File object
         @file_path = dialog.open_finish(gio_task).path
         file_chooser_button.label = File.basename(@file_path)
-      rescue Gtk::DialogError
-        p 'cancel'
+      rescue Gtk::DialogError => e
+        warn "File dialog cancelled: #{e.message}"
       end
     end
 
