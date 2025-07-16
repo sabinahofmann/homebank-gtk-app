@@ -6,14 +6,18 @@ module Homebank
     # Register the class in the GLib world
     type_register
 
+    UI_ELEMENTS = %w[
+      id_value_label bank_name_entry start_line_entry date_entry
+      payment_entry tag_entry payee_entry memo_entry amount_entry
+      category_entry notes_text_view cancel_button save_button delete_button
+    ].freeze
+
     class << self
       def init
         # Set the template from the resources binary
         set_template resource: '/de/hofmann/homebank-gtk/ui/account_window.ui'
         # Bind the window's widgets
-        %w[id_value_label bank_name_entry start_line_entry date_entry payment_entry tag_entry
-           payee_entry memo_entry amount_entry category_entry notes_text_view
-           cancel_button save_button delete_button].each do |widget|
+        UI_ELEMENTS.each do |widget|
           bind_template_child widget
         end
       end
