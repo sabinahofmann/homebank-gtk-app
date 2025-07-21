@@ -32,7 +32,13 @@ module Homebank
       # convert csv
       convert_button.signal_connect 'clicked' do
         if @file_path
-          CsvConvertor.new(account:, file: @file_path).generate ? info_confirmation : error_confirmation
+          begin
+            result = CsvConvertor.new(account:, file: @file_path).generate
+            result ? info_confirmation : error_confirmation
+          rescue StandardError => e
+            warn "CSV conversion failed: #{e.message}"
+            error_confirmation
+          end
         end
       end
 
