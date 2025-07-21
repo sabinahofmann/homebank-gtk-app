@@ -109,10 +109,14 @@ module Homebank
     end
 
     def delete_accounts
-      FileUtils.rm_f Dir.glob("#{application.user_data_path}/*")
-      json_files = Dir[File.join(File.expand_path(application.user_data_path), '*.json')]
-      items = json_files.map { |filename| Account.new(filename:) }
-      items.each(&:delete!)
+      account_json_files.each do |filename|
+        begin
+          Account.new(filename:).delete!
+        rescue StandardError => e
+          warn "Failed to delete account #{filename}: #{e.message}"
+          File.delete(filename) if File.exist?(filename)
+        end
+      end
     end
   end
 end
