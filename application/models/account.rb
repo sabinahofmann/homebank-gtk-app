@@ -28,13 +28,16 @@ module Homebank
 
     # Loads an item from a file
     def load_from_file(filename)
-      properties = JSON.parse(File.read(filename))
+      file_content = File.read(filename)
+      properties = JSON.parse(file_content)
       # Assign the properties
       PROPERTIES.each do |property|
         send "#{property}=", properties[property.to_s]
       end
-    rescue ArgumentError => e
-      raise "Failed to load existing item: #{e.message}"
+    rescue JSON::ParserError => e
+      raise "Invalid JSON in file #{filename}: #{e.message}"
+    rescue ArgumentError, SystemCallError => e
+      raise "Failed to load existing item from #{filename}: #{e.message}"
     end
 
     # Saves an item to its `filename` location
