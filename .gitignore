@@ -50,3 +50,8 @@ build-iPhoneSimulator/
 .rvmrc
 
 thunar.core
+
+# Editor and OS
+.DS_Store
+.idea/
+resources/.DS_Store
